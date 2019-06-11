@@ -1,0 +1,165 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 '''\
+Donato,Brandon\
+bdonato1@binghamton.edu\
+CS 110 - B57\
+Jia Yang\
+assignment6Ex2\
+'''\
+\
+'''\
+Analysis:\
+\
+Create a game where the player inputs the amount of money he or she is\
+willing to bet and that is added to the pot. The program then simulates\
+a dice roll for each turn and if the sum of the dice is 7, the player\
+wins $4. If not, the player loses $1. The aformentioned amounts are\
+added or subtracted from the pot as the program runs. The game ends when\
+there is no money left in the pot.\
+\
+Output to monitor:\
+  rollNumber (int) - What number roll it is.\
+  diceValue (int) - Sum of the dice.\
+  pot (int) - The amount of money in the pot.\
+  bestPot (int) - The most amount of money in the pot.\
+  bestRoll (int) - The number roll that the user had the most money in\
+                     the pot.\
+\
+Input from keyboard:\
+  pot (int) - The starting value of the pot.\
+\
+Tasks allocated to Functions:\
+  diceSum()\
+  luckySevensGame()\
+  initalPotValidation()\
+\
+'''\
+\
+import random\
+\
+# Constants\
+RANGE_OF_DICE_1 = 1\
+RANGE_OF_DICE_7 = 7\
+MONEY_ADDED_TO_POT = 4\
+DICE_ROLL_OF_7 = 7\
+\
+# Validates starting pot value\
+# param initalPot (str)\
+# return True when the starting pot is only made of digits and greater\
+#   than 0\
+def initalPotValidation(initalPot):\
+  return initalPot.isdigit() and int(initalPot) > 0\
+\
+# Simulates rolling 2 dice \
+# returns the sum of two die\
+def diceSum():\
+  dice1 = random.randrange(RANGE_OF_DICE_1,RANGE_OF_DICE_7)\
+  dice2 = random.randrange(RANGE_OF_DICE_1,RANGE_OF_DICE_7)\
+  diceSum = (dice1 + dice2)\
+  return diceSum\
+\
+# Plays the Lucky Sevens Game\
+# param pot (int)\
+# returns the roll, the value of the roll, the amount of money in the pot\
+#   the best roll and the most money in the pot\
+def luckySevensGame(pot):\
+  rollNumber = 0\
+  bestRoll = 0\
+  bestPot = pot\
+  while pot > 0:\
+    diceValue = diceSum()\
+    if diceValue == DICE_ROLL_OF_7:\
+      pot = pot + MONEY_ADDED_TO_POT\
+    else:\
+      pot = pot - 1\
+    rollNumber += 1\
+    if pot > bestPot:\
+      bestPot = pot\
+      bestRoll = rollNumber\
+    print(rollNumber, '\\t', diceValue, '\\t', pot)\
+  print("Your best roll was roll", bestRoll, "and you had", bestPot, \\\
+        "dollars.")\
+  print("You lost all your money after", rollNumber, "rolls.")\
+\
+# The program takes in the inital betting value and then plays the Lucky\
+#   Sevens Game.\
+def main():\
+  # Priming read \
+  pot = input("Please enter a starting bet in whole dollars\\\
+ or press <Enter> to quit. ")\
+\
+  while pot:\
+    # Validates the users inital pot input\
+    while not initalPotValidation(pot):\
+      print("Your input is incorrect.\\\
+ Please enter an amount in whole dollars.")\
+      pot = input("Please enter a starting bet in whole dollars\\\
+ or press <Enter> to quit.")\
+\
+    # Prints the head of the table\
+    print("Roll",'\\t',"Value", '\\t', "Dollars in Pot")\
+\
+    # Converts the inital pot value into the \
+    pot = int(pot)\
+\
+    # Plays the Lucky Sevens Game\
+    rounds = luckySevensGame(pot)\
+\
+    # Continuation of the loop\
+    pot = input("Please enter a starting bet in whole dollars\\\
+ or press <Enter> to quit. ")\
+    \
+main()\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Python 3.4.3 (v3.4.3:9b73f1c3e601, Feb 23 2015, 02:52:03) \
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin\
+Type "copyright", "credits" or "license()" for more information.\
+>>> WARNING: The version of Tcl/Tk (8.5.9) in use may be unstable.\
+Visit http://www.python.org/download/mac/tcltk/ for current information.\
+================================ RESTART ================================\
+>>> \
+Please enter a starting bet in whole dollars or press <Enter> to quit. dasdf\
+Your input is incorrect. Please enter an amount in whole dollars.\
+Please enter a starting bet in whole dollars or press <Enter> to quit.15\
+Roll 	 Value 	 Dollars in Pot\
+1 	 6 	 14\
+2 	 6 	 13\
+3 	 11 	 12\
+4 	 5 	 11\
+5 	 2 	 10\
+6 	 7 	 14\
+7 	 10 	 13\
+8 	 6 	 12\
+9 	 8 	 11\
+10 	 7 	 15\
+11 	 2 	 14\
+12 	 8 	 13\
+13 	 3 	 12\
+14 	 11 	 11\
+15 	 5 	 10\
+16 	 4 	 9\
+17 	 4 	 8\
+18 	 5 	 7\
+19 	 8 	 6\
+20 	 2 	 5\
+21 	 9 	 4\
+22 	 7 	 8\
+23 	 4 	 7\
+24 	 11 	 6\
+25 	 9 	 5\
+26 	 8 	 4\
+27 	 8 	 3\
+28 	 8 	 2\
+29 	 9 	 1\
+30 	 11 	 0\
+Your best roll was roll 0 and you had 15 dollars.\
+You lost all your money after 30 rolls.\
+Please enter a starting bet in whole dollars or press <Enter> to quit. \
+>>> }

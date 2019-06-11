@@ -1,0 +1,172 @@
+Seung Woo Lee
+Brandon Donato
+CS471 Assignment 10
+
+1.
+	CYU 11 (pg. 421): How does an in-line subroutine differ from a macro?
+
+	- A in-line subroutine differs from a macro in that the in-line subroutine adds more code, but at the same time avoids branching delays (calls to other subroutines) and has less space allocation (since the subroutine is only used when needed, and doesn't exist on the stack otherwise.) A in-line subroutine is expanded only once during the compilation stage, and can be ignored by the compiler, created as a normal subroutine. A macro is: processed by the preprocessor before compilation, evaluated wherever there is a macro in the code, cannot access the members of a given class and does not have any form of type-checking. (pg. 419, Prof. Head's notes)
+
+	CYU 12 (pg. 421): Under what circumstances is it desirable to expand a subroutine in-line?
+	
+	- The circumstance where you would want to create an inline function is when you are trying to increase the performance of a program by lessening the amount of memory needed and if you would want to create smaller, shorter subroutines.
+
+
+2.
+	CYU 19 (pg. 440): What is an r-value reference? Why might it be useful?
+
+	- An r-value reference is an argument that would be a r-value (like an expression of sorts) to be passed to some subroutine as a reference. These are useful in move assignments in C++, as they prevent creating a new, temporary variable to take copied information and then destroying the original. Instead, this allows the newly created variable to take the values of the argument passed to it, and then destroying the temporary (like what a copy assignment would have done anyway). (pg. 430).
+
+3.
+	CYU 36 (pg. 461):  What is the difference between a coroutine and a thread?
+	
+	- Coroutines are a form of sequential processing, where only one coroutine is running at once, although each coroutine executes independently of one another, they explicitly pass signals and information to each other. Threads, however, are concurrent processing where one thread executes on one core separately from the other threads. Because threads are concurrent and coroutines are sequential, threads can accomplish more in a shorter amount of time. (pg. 450)
+
+4.
+	CYU 41 (pg. 461): What is an event in the programming language sense of the word?
+	
+	- An event is "something to which a running program (a process) needs to respond, but which occurs outside the program, at an unpredictable time." (pg. 456)
+
+	CYU 42 (pg. 461): Summarize the two main implementation strategies for events.
+
+	- One way events are handled are through sequential handlers. This focuses on subroutines catching an event, interrupting the main program execution while saving state, handling the event and then returning to the main flow of execution. The other method, Thread-Based Handlers, use the ability of having threads executing on multiple different cores at the same time to have dedicated threads running subroutines that handle the events once they come in. The major difference is that thread handling doesn't break the thread of execution to handle the event, rather it can handle the event at the same time. (pgs. 457-459)
+
+5.
+	Exercise 9.4 (pg. 463): 
+
+	Consider the following (erroneous) program in C:
+        void foo() {
+           	int i;
+		printf("%d ", i++); 
+	}
+        int main() {
+            int j;
+		for (j = 1; j <= 10; j++) foo(); 
+	}
+
+Local variable i in subroutine foo is never initialized. On many systems, however, the program will display repeatable behavior, printing 0 1 2 3 4 5 6 7 8 9. Suggest an explanation. Also explain why the behavior on other systems might be different, or nondeterministic.
+
+	- When foo() is called in main(), it places itself in the same exact place on the stack, thus the variable "i" is incremented consistently, although it's not initialized. However, if the call to foo() cannot be reliably placed on the same exact place on the call stack, the behavior becomes undeterministic. 
+
+
+6. 
+	Exercise 9.15 (pg. 465): Consider the following declaration in C:
+	
+	double(*foo(double (*)(double, double[]), double)) (double, ...);
+    
+	Describe in English the type of foo.
+	
+	- foo is a function, which takes a pointer to another function (which takes a pointer to an array of doubles and a double), and a double. foo returns a pointer to a function that takes a double and any anything else, where that function returns a double. (http://unixwiz.net/techtips/reading-cdecl.html)
+
+7. Consider the following function/macro definition in C:
+    #define SQUARE(x) x*x
+
+    int squaref (int x) {
+        return x * x;
+    }
+
+What is the result of the invocation of squaref(a) ? (Assume pass by value semantics.)
+
+    - The result of squaref(a) would return 25
+
+What is the computed result of SQUARE(a)?   (Macro expansion.)
+
+    - The computed result of SQUARE(a) would return 25
+
+Give an example where squaref(x) and SQUARE(x) compute different values.
+
+    - squaref(a+1) will result in 36 and SQUARE(a+1) will result in 11
+
+Assume a = 5. 
+
+8. Consider the following code snippet in C-like syntax:
+    int a[3];
+
+    int runit(){
+        i = 1;
+        a[0] = 2;
+        a[1] = 1;
+        a[2] = 0;
+        mys(i,a[i]);
+        print(i, a[0], a[1], a[2]);
+        mys(a[1],a[i]);
+        print(i, a[0], a[1], a[2]);
+        return 0;
+    }
+    void mys(int x, int y){
+        x = x + y;
+        y = x - y;
+        x = x - y;
+    }
+
+What is the printout of runit()  assuming each of the following parameter-passing mechanisms.  Show how you determined the answer.   There may be more than one correct answer.
+    A. By value.
+
+        - 1, 2, 1, 0 
+          1, 2, 1, 0
+
+        Since it is pass by value, mys(...) did not change the values of the variables in runit()
+
+    B. By reference.
+
+        - 1, 2, 1, 0
+          1, 2, 0, 0
+
+        The first call to mys(...) will swap the two reference values (in this case 1 and 1)
+        The second call to mys(x, y), x and y are the same reference and changing the value of x will result in changing y to the same value. Therefore x = x + y will result in x = 2 and y = 2 and doing the rest of the calculation will result in x = y = 0. 
+    
+    C. By value-result (copy-in/copy-out) 
+
+        - 1, 2, 1, 0
+          1, 2, 0, 0
+
+        The first call will swap the two values
+        The second call to mys(x, y), x and y are the same reference (a[1]) so x = y. Since it is pass by value result, it will make a copy of the reference and pass it by reference to the function. This will do the same thing as what happened in pass by reference. After it returns from function, it assigns the value to the actual parameters.
+
+    D. By macro expansion.
+
+        - #define mys(i, a[i]) i = i + a[i]; a[i] = i - a[i]; i = i - a[i]
+	
+	First expansion: mys(i, a[i]): i = i + a[i] (i = 1 + 1 == 2); 
+				       a[i] = i - a[i] (a[2] = 2 - 0 == 2);
+				       i = i - a[i] (i = 2 - 2 == 0);
+
+	Second expansion: mys(a[1], a[i]): a[1] = a[1] + a[i] (a[1] = 1 + 2 == 3);
+					   a[i] = a[1] - a[i] (a[0] = 3 - 2 == 1);
+				 	   a[1] = a[1] - a[i] (a[1] = 3 - 1 == 2);
+	
+	prints: 0, 2, 1, 2
+		0, 1, 2, 2 
+
+    E. By name.
+
+        - 2, 2, 1, 2
+          2, 2, 2, 1
+        
+        The first call x = i = 1 and y = a[i] = 1. x = x + y will become i = 1 + 1 = 2. y = x - y will become a[i] = a[2] = 2 - (a[2] = 0) = 2. x = x - y will become i = 2 - 0 = 2.
+        The second call will swap the two values a[1] and a[2]
+
+9. Compare Java final methods with C++ nonvirtual methods. How are they the same? How are they different?
+
+    - Final methods in Java and nonvirtual methods in C++ cannot be overridden. However, in C++ you can create a nonvirtual method with the same signature in the child class while Java does not allow that.
+
+10. What happens to the implementation of a class if we redefine a data member? For example, suppose we have
+    class foo {
+        public:
+            int a;
+            char *b;
+    };
+    ...
+    class bar : public foo {
+        public:
+            float c;
+            int b;
+    };
+
+Does the representation of a bar object contain one b field or two? If two, are both accessible, or only one? Under what circumstances?
+
+    - The bar object contains two b fields, one for the parent (foo) and one for the child (itself). Both of them are accessible but you need to cast.
+
+11. If foo is an abstract class in a C++ program, why is it acceptable to declare variables of type foo*,but not of type foo?
+
+    - If it is type foo, that means that it needs to be instantiated (abstract classes cannot do that). If it is type foo*, it can be used as a pointer to a instance of nonabstract classes that inherited the abstract class foo

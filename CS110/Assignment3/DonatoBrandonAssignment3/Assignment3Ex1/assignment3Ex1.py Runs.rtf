@@ -1,0 +1,59 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\froman\fcharset0 TimesNewRomanPSMT;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww15680\viewh9880\viewkind0
+\deftab720
+\pard\pardeftab720\ri0
+
+\f0\b\fs24 \cf0 Brandon Donato  									           \
+\pard\pardeftab720\ri0
+
+\b0 \cf0 \
+'''Donato,Brandon,bdonato1@binghamton.edu,CS 110, B57, Jia Yang,\\\
+assignment3Ex1'''\
+\
+def handshakes(people):\
+  return (people * (people - 1))//2\
+\
+def handshakeLoop(people):\
+  runningTotal = 0\
+  for counter in range(1,people):\
+    runningTotal = runningTotal + counter\
+  return runningTotal\
+\
+def compareInts(first,second):\
+  return first==second\
+\
+def main():\
+  \
+  numPeople = input("How many people are there? ")\
+  numPeople = int(numPeople)\
+  print("There are",handshakes(numPeople),"handshakes.")\
+  print("There are",handshakeLoop(numPeople),"handshakes.")\
+  print("The formula and iteration methods compute %s" % \\\
+         ("the same value" if compareInts(handshakes(numPeople),\\\
+                                          handshakeLoop(numPeople)) \\\
+                          else "different values"))\
+\
+main()\
+\
+\pard\pardeftab720\ri-814
+\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\pardeftab720\ri0
+\cf0 \
+Python 3.4.3 (v3.4.3:9b73f1c3e601, Feb 23 2015, 02:52:03) \
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin\
+Type "copyright", "credits" or "license()" for more information.\
+>>> WARNING: The version of Tcl/Tk (8.5.9) in use may be unstable.\
+Visit http://www.python.org/download/mac/tcltk/ for current information.\
+================================RESTART=============================\
+>>> \
+How many people are there? 1\
+There are 0 handshakes\
+>>> ================================RESTART=============================\
+>>> \
+How many people are there? 2\
+There are 1 handshakes.\
+There are 1 handshakes.\
+The formula and iteration methods compute the same value\
+>>> }

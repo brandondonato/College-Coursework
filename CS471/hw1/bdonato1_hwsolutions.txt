@@ -1,0 +1,94 @@
+Brandon Donato
+CS471 Assignment 1
+
+1.
+	Submitted for attendance and as a grade for lab on 01/24/19
+
+2.
+	.file	"gcd.c"
+	.text
+	.globl	gcdI
+	.type	gcdI, @function
+gcdI:
+.LFB0:
+	.cfi_startproc
+	pushq	%rbp            //This is where the stack frame begins/is created
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp      //Keep track of the top of the stack
+	.cfi_def_cfa_register 6
+	movl	%edi, -4(%rbp)  //This is moving variable "i" into the register
+	movl	%esi, -8(%rbp)  //This is moving variable "j" into the register
+	jmp	.L2             //Enter the while loop
+.L4:
+	movl	-4(%rbp), %eax  //Move "i" into register %eax
+	cmpl	-8(%rbp), %eax  //Compare variable "i" with "j"
+	jle	.L3             //If less than or equal, jump to section .L3, else continue
+	movl	-8(%rbp), %eax  //Move "j" into %eax
+	subl	%eax, -4(%rbp)  //Subtract "i" from "j"
+	jmp	.L2             //Go to section .L2
+.L3:
+	movl	-4(%rbp), %eax  //Move "i" into register %eax
+	subl	%eax, -8(%rbp)  //Subtract "j" from "i"
+.L2:
+	movl	-4(%rbp), %eax  //Move "i" into register %eax
+	cmpl	-8(%rbp), %eax  //Make a comparison between "i" and "j"
+	jne	.L4             //If they are not equal, jump to section .L4, else continue
+                           	//	If you continue, you have exited the while loop
+	movl	-4(%rbp), %eax  //Move "i" into register %eax
+	popq	%rbp            //This is where the stack frame is removed and there is no longer a pointer
+	.cfi_def_cfa 7, 8
+	ret                     //This is where the functions ends and where it exits
+                            	//	It will return the variable left in register %eax ("i")
+	.cfi_endproc
+.LFE0:
+	.size	gcdI, .-gcdI
+	.ident	"GCC: (Debian 6.3.0-18+deb9u1) 6.3.0 20170516"
+	.section	.note.GNU-stack,"",@progbits
+
+3.
+	You will get an error in program "int gcdM(int i, int j)" because you will eventually end up with either "i" or "j" becoming 0. Once one of those values is 0, you will get a "Floating point exception" since you are attempting division by 0. In order to fix this issue, you will need to perform a check after performing the modular division.
+
+	You can add the following code after the line "i = i % j;": 
+	    
+	    if(i == 0){
+                i = j;
+                break;
+            }
+	
+	And the following code after the line "j = j % i":
+		
+	    if(j == 0){
+                break;
+            }
+
+	Adding the above changes should fix the issues and allow gcdM to obtain the same results as gcdI.
+
+	If you are attempting to determine the gcd of two very large numbers, using modular division is faster than subtraction, so as the numbers get larger, I expect gcdM to become faster than gcdI.
+
+4.
+	The big-oh complexity of the gcdI program is O(n) where the worst case would include extremely large numbers reducing down to each other over time. The big-oh complexity of the gcdR program is also O(n). 
+
+	The choice between iterative and recursive solutions might come down to how fast an algorithm needs to run or code simplicity. Recursive code tends to be shorter than the iterative counterpart, and that can lead to cleaner code. Iterative solutions can be easier to visualize and understand, and also it's easier to notice infinite loops in an iterative solution vs. a recursive one. Overall, it's up to the choice of the programmer.
+
+5.
+	See gcd_full.py and gcd_full.rb
+6.
+	"Errors in a computer program can be classified according to when they are detected and, if they are detected at compile time, what part of the compiler detects them. Using your favorite imperative language, give an example of each of the following."
+
+	a) int ma#4 = 3; //There is a '#' symbol in the name of the variable
+	b) int num1 = 1, char first = 'a'; //There is no ';' before the char declaration, and a char cannot be declared in the same line as another primitive or user-defined type.
+	c) int num1 = 3.0; //Here, you declared an int type, but tried to store a floating-point number
+	d) int num[30]; num[30] = 1; //Here, this is an index out-of-bounds exception, which will not be caught until the code runs.
+	e) if(false){...} //This statement will never run the code in the following block, but would never be caught by the scanner, parser or compiler.
+
+7.
+	Technically, this statement is false. As long as a programming language is Turing Complete, you should be able to write the same program in any language. This would imply no one programming language is more "powerful" than another. However, some programming languages are more clear and concise than others, which some might argue makes them more powerful since they are easier to read and write, thus saving time. Other than that, there is no objective way to determine if a programming language is more "powerful" than another.
+
+8.
+	a) The value is 2
+	b) The value is 4
+	c) The value is 14***
+	d) The value is 6
+	e) The value is 11
+		

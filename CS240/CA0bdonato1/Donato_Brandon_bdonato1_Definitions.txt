@@ -1,0 +1,17 @@
+1. man - It is a command that describes the command you might want to execute. 
+	 It also provides a list of tags that show what else you can specify to the command.		
+
+2. mkdir - This command creates a new directory for someone to store information. 
+	   I learned that this command has a parent tag so that you can create a parent directory to 
+	   a file that already exists.
+
+3. ls - This command shows all of the contents of a directory that you are already in. 
+	I learned that this command has different flags, such as -a or --author, to further specify
+	what files you want to look at and who the created the given files.
+
+4. mv - It is a command that can move files from one directory to another as well as rename files.
+	I learned that not only can you move files with this command, but you can also update and 
+	modify the extentions of files that you choose to move.
+
+5. pwd - This is a command that prints the file name of the directory you are currently in. You can also
+	 view the version of the directory you are in.mk

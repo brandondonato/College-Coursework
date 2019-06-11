@@ -1,0 +1,113 @@
+Brandon Donato
+CS471 Assignment 2
+
+1.
+    a)
+	<expr> := <term> | <term>+<expr>
+	<term> := <factor> | <factor>*<term>
+	<factor> := (<expr>) | <number>
+	<number> := <digit><number> | <digit>
+	<digit> := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+     b)
+	The grammar is right recursive, which implies that it is right associative. 
+
+2. 
+	<expr> := <A> | <A>+<expr>
+	<A> := <term> | <term>-<A>
+	<term> := <B> | <B>*<term>
+	<B> := <factor> | <factor>@<B>
+	<factor> := (<expr>) | <number>
+	<number> := <digit><number> | <digit>
+	<digit> := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+3.	
+	I will be defining "->" as derives. 
+
+	a) <expr> -> <A>+<expr> -> <A>+<A> -> <A>+<term>-<A> -> <term>+<term>-<term> -> <B>+<B>-<B> -> <factor>+<factor>-<factor> -> <number>+<number>-<number> -> <digit>+<digit>-<digit> -> 1+2-2
+
+	b) <expr> -> <A> -> <term>-<A> -> <term>-<term> -> <term>-<B>*<term> -> <B>-<B>*<B> -> <factor>-<factor>*<factor> -> <number>-<number>*<number> -> <digit>-<digit>*<digit> -> 2-3*5
+
+	c) <expr> -> <A> -> <term>-<A> -> <term>-<term> -> <B>-<B> -> <B>-<factor>@<B> -> <factor>-<factor>@<factor> -> <number>-<number>@<number> -> <digit><number>-<number>@<number> -> <digit><digit>-<digit>@<digit> -> 10-5@2
+
+	d) <expr> -> <A> -> <term>-<A> <term>-<term>-<A> -> <term>-<term>-<term> -> <B>-<B>-<B> -> <factor>-<factor>-<factor> -> <number>-<number>-<number> -> <digit><number>-<number>-<number> -> <digit><digit>-<digit>-<digit> -> 10-7-2
+
+4. 
+	See arith1_p4.c 
+
+5.
+	a)
+	
+	<expr> := <term> | <expr>+<term>
+	<term> := <factor> | <term>*<factor>
+	<factor> := (<expr>) | <number>
+	<number> := <digit><number> | <digit>
+	<digit> := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+	b)
+	
+	The grammar is left recursive, which implies that it is left associative.
+
+6.
+	<expr> := <A> | <expr>+<A>
+	<A> := <term> | <A>-<term>
+	<term> := <B> | <term>*<B>
+	<B> := <factor> | <B>@<factor>
+	<factor> := (<expr>) | <number>
+	<number> := <digit><number> | <digit>
+	<digit> := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+7.
+	
+	a) <expr> -> <expr>+<A> -> <A>+<A> -> <A>+<A>-<term> -> <term>+<term>-<term> -> <B>+<B>-<B> -> <factor>+<factor>-<factor> -> <number>+<number>-<number> -> <digit>+<digit>-<digit> -> 1+2-2
+
+	b) <expr> -> <A> -> <A>-<term> -> <term>-<term> -> <term>-<term>*<B> -> <B>-<B>*<B> -> <factor>-<factor>*<factor> -> <number>-<number>*<number> -> 2-3*5
+
+	c) <expr> -> <A> -> <A>-<term> -> <term>-<term> -> <term>-<term> -> <B>-<B> -> <B>-<B>@<factor> -> <factor>-<factor>@<factor> -> <number>-<number>@<number> -> 10-7-2
+
+	d) <expr> -> <A> -> <A>-<term> -> <A>-<A>-<term> -> <A>-<A>-<A> -> <term>-<term>-<term> -> <B>-<B>-<B> -> <factor>-<factor>-<factor> -> <number>-<number>-<number> -> 10-7-2
+
+8.
+	See arith2_p8.c
+
+9.
+	a)
+		^[a-zA-Z_]\w*$
+	b)
+		^"([^\\"]|\\.)*"$
+	c)
+		^a*(ba*ba*)*$
+	d)
+		^[ab]*c[ab]*(c[ab]*c[ab]*)*$
+
+10.
+	1)
+		They are used to identify whether something is true or false (0 or not 0). 
+
+	2)
+		bool is an alias for _Bool. This was because prior to C99, bool was not a reserved word, and _Bool was a keyword that was also reserved.
+
+	3)
+		None is better than the other since bool is just an alias for _Bool. Using _Bool eliminates all ambiguity when parsing the code, but bool is much easier to recognize among other programming languages.
+
+11.
+
+	Pragmas provide directives or hints to the compiler. 
+
+	The scanner will process the Pragmas if they are defined as significant comments (a directive that does not affect the the program execution, just the compilation process). The scanner processes pragmas to avoid overcomplicating the parser/semantic analyzer.
+
+	Some benefits are that it can speed up programs, which can lead to significantly faster execution. It also allows the programmer more control over the code they are writing. 
+	
+	Some detriments are that too much control over the compiler can lead to more errors and undefined behavior. 
+
+12.
+
+	a)+w^x^yz
+	b)++wx/yz
+	c)**wx^yz
+	d)/*/wxyz
+
+13.
+	a)wxyz^^+
+	b)wx+yz/+
+	c)wx*yz^*
+	d)wx/y*z/
+

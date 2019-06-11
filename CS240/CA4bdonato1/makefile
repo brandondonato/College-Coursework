@@ -1,0 +1,24 @@
+#
+# Specifiy the target
+all:	Dish
+
+# Specify the object files that the target depends on
+# Also specify the object files needed to create the executable
+Dish:	CA4.o Dish.o Node.o
+	g++  Dish.o CA4.o Node.o -o Dish
+
+# Specify how the object files should be created from source files
+Dish.o:	Dish.h Dish.cpp
+	g++ -c Dish.cpp
+
+Node.o:	Node.h Node.cpp
+	g++ -c Node.cpp
+
+CA4.o:	Dish.h CA4.cpp
+	g++ -c CA4.cpp
+
+# Specify the object files and executables that are generated
+# and need to be removed to re-compile the whole thing
+clean:
+	rm -f *.o Dish
+

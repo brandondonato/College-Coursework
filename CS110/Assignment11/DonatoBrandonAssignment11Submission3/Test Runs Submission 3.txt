@@ -1,0 +1,1682 @@
+"""
+Donato, Brandon
+bdonato1@binghamton.edu
+CS 110 - B57
+Jia Yang
+Assignment11Ex1
+"""
+
+'''
+This class represents a patron
+A Patron has a name, a status and zero or more books checked out
+'''
+
+class Patron:
+  
+  # Class Variables ----------------------------------------------------------
+  
+  # Maximum number of books Patron can take out (int)
+  MAX_BOOKS_OUT = 3
+
+  # Current status of this Patron (str)
+  # Will be combined with name of Patron
+  STATUS = [" can borrow up to 3 books", " can borrow two more books", \
+            " can borrow one more book", " must return book(s)"]
+  
+  
+  # Constructor --------------------------------------------------------------
+
+  # params:  name - name of Patron(str)
+  # initialize:  self.__name (str), to parameter name,
+  #              self.__numBooksOut (int) to 0, and self.__status() (str)
+  #                to STATUS[0]
+  def __init__(self, name):
+    # your code here
+    self.__name = name
+    self.__numBooksOut = 0
+    self.__status = Patron.STATUS[0]
+
+  # Predicates ---------------------------------------------------------------
+
+  # True if less then max books checked out, False otherwise
+  def canCheckOutBooks(self):
+    return (self.__numBooksOut < Patron.MAX_BOOKS_OUT)
+
+  # True if books checked out, False otherwise
+  def hasCheckedOutBooks(self):
+    # your code here
+    return (self.__numBooksOut > 0)
+
+
+  # Accessors ----------------------------------------------------------------
+
+  # returns: name (str)
+  def getName(self):
+    # your code here
+    return self.__name
+    
+  # returns: status (str)
+  def getStatus(self):
+    # your code here
+    return self.__status
+    
+  # returns: number of books out (int)
+  def getNumBooksOut(self):
+    # your code here
+    return self.__numBooksOut
+
+  # Mutators -----------------------------------------------------------------
+
+  # set to STATUS indexed by number of books out
+  def __updateStatus(self):
+    # your code here
+    self.__status = Patron.STATUS[self.getNumBooksOut()]
+    
+  # invokes: updateStatus()
+  def increment(self):
+    # your code here
+    self.__numBooksOut += 1
+    self.__updateStatus()
+    
+  # invokes updateStatus()
+  def decrement(self):
+    # your code here
+    self.__numBooksOut -= 1
+    self.__updateStatus()
+
+  # Comparators --------------------------------------------------------------
+
+  # Already written for you:
+  # You will need to include these in order to sort Patron objects
+
+  # Shows how two Patrons can be compared with respect to the < relationship
+  # params:  other - another Patron object
+  # invokes: type()
+  # returns: True when they are not the same Patron and other is a Patron
+  #          object and name of this Patron is lexicographically less than 
+  #          name of other Patron, False otherwise (bool)
+  def __lt__(self, other):
+    return (not self is other) and (type(self) == type(other)) and \
+           self.__name < other.__name
+
+  # Shows how two Patrons can be compared with respect to the == relationship
+  # params:  other - another Patron object
+  # invokes: type()
+  # returns: True when both are same Patron OR both are Patron objects AND
+  #          all attributes are equal, False otherwise (bool)
+  def __eq__(self, other):
+    return self is other or \
+           (type(self) == type(other) and \
+            self.__name == other.__name and \
+            self.__status == other.__status and \
+            self.__numBooksOut == other.__numBooksOut)
+
+  # Convert to str -----------------------------------------------------------
+
+  def __str__(self):
+    # your code here
+    return "\nName of patron: " + self.__name + "\nNumber of books they've\
+ checked out: " + str(self.__numBooksOut) + "\nHow many more books they can\
+ check out: " + self.__status
+
+————————————————————————————————————————————
+
+Python 3.4.3 (v3.4.3:9b73f1c3e601, Feb 23 2015, 02:52:03) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+Type "copyright", "credits" or "license()" for more information.
+>>> ================================ RESTART ================================
+>>> 
+
+----------------------------------------------------------------------
+Patron: 
+
+
+Name of patron: first
+Number of books they've checked out: 0
+How many more books they can check out:  can borrow up to 3 books
+
+Name: firstStatus:  can borrow up to 3 books
+Books Out: 0
+
+Can Take out Books? True
+Has Books Checked Out? False
+
+
+Have patron take book out:  1
+
+Name of patron: first
+Number of books they've checked out: 1
+How many more books they can check out:  can borrow two more books
+
+Name: first
+Status:  can borrow two more books
+Books Out: 1
+
+Can Take out Books? True
+Has Books Checked Out? True
+
+Have patron take book out:  2
+
+Name of patron: first
+Number of books they've checked out: 2
+How many more books they can check out:  can borrow one more book
+
+Name: first
+Status:  can borrow one more book
+Books Out: 2
+
+Can Take out Books? True
+Has Books Checked Out? True
+
+Have patron take book out:  3
+
+Name of patron: first
+Number of books they've checked out: 3
+How many more books they can check out:  must return book(s)
+
+Name: first
+Status:  must return book(s)
+Books Out: 3
+
+Can Take out Books? False
+Has Books Checked Out? True
+
+
+Have patron return books:  1
+
+Name of patron: first
+Number of books they've checked out: 2
+How many more books they can check out:  can borrow one more book
+
+Name: first
+Status:  can borrow one more book
+Books Out: 2
+
+Can Take out Books? True
+Has Books Checked Out? True
+
+Have patron return books:  2
+
+Name of patron: first
+Number of books they've checked out: 1
+How many more books they can check out:  can borrow two more books
+
+Name: first
+Status:  can borrow two more books
+Books Out: 1
+
+Can Take out Books? True
+Has Books Checked Out? True
+
+Have patron return books:  3
+
+Name of patron: first
+Number of books they've checked out: 0
+How many more books they can check out:  can borrow up to 3 books
+
+Name: first
+Status:  can borrow up to 3 books
+Books Out: 0
+
+Can Take out Books? True
+Has Books Checked Out? False
+>>> 
+
+————————————————————————————————————————————————————————————————————
+
+"""
+Donato, Brandon
+bdonato1@binghamton.edu
+CS 110 - B57
+Jia Yang
+Assignment11Ex2
+"""
+
+'''
+This class represents a book with a title, author, status,
+a patron to whom the book is checked out, and a list
+of patrons waiting for it
+'''
+
+class Book:
+
+  # Class Variables ----------------------------------------------------------
+  # index when book is first created (int)
+  NONE = 0
+
+  # index when book is loaned successfully (int)
+  SUCCESSFUL = 1
+
+  # index when patron is put on waiting list (int)  
+  WAIT = 2
+  
+  # index when request for loan is unsuccessful (int)
+  UNSUCCESSFUL = 3
+
+  # index when book is returned (int)
+  RETURNED = 4
+
+  # index when request for loan is invalid (int)
+  INVALID = 5
+  
+  # status of most recent transaction with respect to this book (str)
+  # Will be combined with name of patron participating in transaction and
+  #   and title of this book"""
+  TRANS_STATUS = [" No transactions yet",
+                  " successfully checked out ",
+                  " has been put on waiting list for ",
+                  " must return books before taking out ",
+                  " has returned ",
+                  " has recorded an invalid transaction re:  "]
+
+  # Constructor --------------------------------------------------------------
+
+  # Creates a new book with the given title and author
+  # params:  title (str) and author (str) of book
+  # initialize:  self.__title (str) and self.__author (str) to value of
+  #                incoming parameters
+  #              self.__transactionStatus (str) to no transactions yet,
+  #              self.__patron (Patron) & self.__waitList (list of Patrons) 
+  #                 to null/empty values
+  def __init__(self, title, author):
+    # your code here
+    self.__title = title
+    self.__author = author
+    self.__transactionStatus = Book.TRANS_STATUS[Book.NONE]
+    self.__patron = None
+    self.__waitlist = []
+    
+
+  # Predicates ---------------------------------------------------------------
+
+  # returns: True when book is already loaned out, False otherwise (bool)
+  def isCheckedOut(self):
+    # your code here
+    return bool(self.__patron)
+    
+  # invokes len()
+  # returns: True if Patron(s) are waiting for book, False otherwise (bool)  
+  def isReserved(self):
+    # your code here
+    return bool(self.__waitlist)
+    
+  # params: patron - a particular patron (Patron)
+  # returns: True when Patron has checked out book, False otherwise (bool)  
+  def hasBook(self, patron):
+    # your code here
+    return (self.__patron == patron)
+    
+  # params: patron - a particular patron (Patron)
+  # returns: True when given Patron is on waiting list, False otherwise (bool)  
+  def isInWaitList(self, patron):
+    # your code here
+    return (patron in self.__waitlist)
+    
+  # Both return and lend
+  # returns: True when previous transaction is "returned" and current 
+  #            transaction is "lend", False otherwise (bool)  
+  def __isTwoPartStatus(self):
+    # your code here
+    return "returned" in self.__transactionStatus \
+            and ("\n" not in self.__transactionStatus)
+
+  # Accessors ----------------------------------------------------------------
+
+  # returns: title of book (str)
+  def getTitle(self):
+    # your code here
+    return self.__title
+
+  # returns: author of book (str)
+  def getAuthor(self):
+    # your code here
+    return self.__author
+    
+  # returns: Patron who has checked out book (Patron)
+  def getPatron(self): 
+    # your code here
+    return self.__patron
+    
+  # returns: record of latest book transaction (str)
+  def getTransactionStatus(self):
+    # your code here
+    return self.__transactionStatus
+
+  # invokes: str()
+  # returns: str representation of waiting list for book (str)
+  def getWaitListStr(self):
+    # your code here
+    nameStr = "Waitlist: "
+    for names in self.__waitlist:
+      nameStr += str(names)
+    return nameStr + '\n'
+    
+  # Mutators -----------------------------------------------------------------
+
+  # This method delegates all responsibilities to private methods of class
+  # invokes: hasBook(), isInWaitList(), canCheckOutBooks(), isCheckedOut(),
+  #          __lendBook(), __putInWaitList(), and __setTransactionStatus()
+  # params:  patron - patron trying to borrow book (Patron)
+  def borrowMe(self, patron): 
+    # your code here
+    if self.hasBook(patron) or self.isInWaitList(patron):
+      self.__setTransactionStatus(patron.getName(), Book.INVALID)
+    elif patron.canCheckOutBooks() and not self.isCheckedOut():
+      self.__lendBook(patron)
+      self.__setTransactionStatus(patron.getName(), Book.SUCCESSFUL)
+    elif patron.canCheckOutBooks() and self.isCheckedOut():
+      self.__putInWaitList(patron)
+      self.__setTransactionStatus(patron.getName(), Book.WAIT)
+    else:
+      self.__setTransactionStatus(patron.getName(), Book.UNSUCCESSFUL)
+    
+    
+  # Return book: release current patron, try to lend to waiting patron
+  # This method delegates all responsibilities to private methods of class
+  # invokes: isCheckedOut(), isReserved(), getName(),
+  #          __resetPatron,(), __lendToNextPatron(), and
+  #          __setTransactionStatus()
+  def returnMe(self): # mutator controller
+    # your code here
+    if self.isCheckedOut():
+      self.__setTransactionStatus(self.__patron.getName(), Book.RETURNED)
+      self.__resetPatron()
+      if self.isReserved():
+        self.__lendToNextPatron()
+        
+      
+  # invokes: increment() (Patron class)
+  # params: patron - Patron borrowing book (Patron)
+  def __lendBook(self, patron): 
+    # your code here
+    patron.increment()
+    self.__patron = patron
+    
+  # invokes: decrement() (Patron class)
+  def __resetPatron(self):
+    # your code here
+    self.__patron.decrement()
+    self.__patron = None
+
+  # Lend book to waiting patron if eligible; if not, remove from wait List
+  # invokes: isCheckedOut(), isReserved(),
+  #          pop() (from list), borrowMe()
+  def __lendToNextPatron(self): # waitList mutator
+    # your code here
+    while not self.isCheckedOut() and self.isReserved():
+      self.borrowMe(self.__waitlist.pop(0))
+    
+  # params:  patron - Patron to put in waiting list (Patron)
+  # invokes: append() (to list)
+  def __putInWaitList(self, patron): # waitList mutator
+    # your code here
+    if (not self.isInWaitList(patron)):
+      self.__waitlist.append(patron)
+    
+  # Creates string describing latest transaction
+  # Combines name of patron participation in transaction with
+  #   status of most recent transaction and title of this book 
+  # params: name - name of Patron participating in transaction (str)
+  #         index - index of transaction in TRANS_STATUS (int)
+  # invokes: __isTwoPartStatus()
+  def __setTransactionStatus(self, name, index):# transStatus mutator
+    # your code here
+    if self.__isTwoPartStatus():
+      self.__transactionStatus += "\n"+ name + Book.TRANS_STATUS[index] \
+            + self.getTitle()
+    else:
+      self.__transactionStatus = name + Book.TRANS_STATUS[index] \
+            + self.getTitle()
+    
+  # Comparators --------------------------------------------------------------
+
+  # Already written for you:
+  # Include these in order to sort Book objects
+
+
+  # Shows how two Books can be compared with respect to the < relationship
+  # params:  other - another object
+  # invokes: type()
+  # returns: True when they are not same Book and other is Book object and
+  #            title of this Book is lexicographically lower than title of
+  #            other Book, False otherwise (bool)"""    
+  def __lt__(self, other):
+    return (not self is other) and (type(self) == type(other)) and \
+           self.__title < other.__title
+
+  # Shows how two Books can be compared with respect to the == relationship
+  # params:  other - another object
+  # invokes: type()
+  # returns: True when both are same Book or both are Book objects and
+  #            title and author are equal, False otherwise (bool)
+  def __eq__(self, other):
+    return self is other or \
+           (type(self) == type(other) and \
+            self.__title == other.__title) and\
+            self.__author == other.__author
+
+  # Convert to Str -----------------------------------------------------------
+
+  # invokes:  str(), getWaitListStr()
+  # returns:  str representation of Book object (str)
+  def __str__(self):
+    # your code here
+    if self.isCheckedOut():
+      bookStr = "Title: %s\nAuthor: %s\nChecked out: %s\n%s" % \
+            (self.__title, self.__author, str(self.__patron),\
+             self.getWaitListStr())
+    else:
+      bookStr = "Title : %s\nAuthor: %s\n%s\n%s" % (self.__title, \
+                self.__author, "Not checked out", \
+                self.getWaitListStr())
+    return bookStr
+
+————————————————————————————————————————————————————————————————————
+
+"""
+Donato, Brandon
+bdonato1@binghamton.edu
+CS 110 - B57
+Jia Yang
+Assignment11Ex3
+"""
+
+from libraryModule import StringGeneratorForDictionaries
+
+'''
+This class represents a named library with books and patrons.
+A library can add and remove Patrons, add and remove Books,
+access information about its Patrons and Books, and keep track of
+any transactions taking place with repect to it's Books and Patrons.
+This class makes use of the StringGeneratorForDictionaries class found
+in the libraryModule file.
+'''
+class Library:
+  
+#-- Class Variables ----------------------------------------------------
+
+  # Index when book not in library
+  NOT_IN_LIBRARY = 0
+
+  # Index when book added to library
+  ADD = 1
+
+  # Index when book removed from library
+  REMOVE = 2
+
+  # Index when patron not a member of library
+  NOT_A_MEMBER = 3
+
+  # Index when patron becomes member of library
+  JOIN = 4
+
+  # Index when patron ends membership in library
+  LEAVE = 5
+
+  # Index when book information is accessed
+  ACCESS = 6
+
+  # Index when patron information is accessed
+  LOOK_UP = 7
+
+  # Most recent transaction with respect to either a book or a patron
+  TRANS_STATUS = [" is not in library",
+                  " has been added to the library",
+                  " has been removed from the library ",
+                  " is not a library member ",
+                  " has been added as a library member",
+                  " has been removed as a library member",
+                  " has been accessed", 
+                  " member files have been accessed"]
+  
+#-- Constructor --------------------------------------------------------
+
+  # Creates new dictionaries to hold books and patrons
+  # params:  name - name of Library(str)
+  # initialize:  self.__name (str), to parameter name,
+  #              self.__books (dict of Book)  and
+  #              self.__patrons() (dict of Patron) to empty dictionaries,
+  #              self.__transactionStatus (str) to TRANS_STATUS with respect to
+  #                book participating in transaction or
+  #                patron participating in transaction
+  def __init__(self, name):
+    # your code here
+    self.__name = name
+    self.__books = {}
+    self.__patrons = {}
+    self.__transactionStatus = ""
+
+#-- Accessors ----------------------------------------------------------
+
+  # returns:  name of library (str)
+  def getName(self):
+    # your code here
+    return self.__name
+
+  # returns:  record of latest transaction (str)
+  def getTransactionStatus(self):
+    # your code here
+    return self.__transactionStatus
+  
+  # params:  title of Book (str)
+  # invokes:  inLibrary(), __setTransactionStatus()
+  # returns:  Book stored in library (Book)
+  def getBook(self, title):
+    # your code here
+    if self.inLibrary(title):
+      self.__setTransactionStatus(title, "", Library.ACCESS)
+      bookStr =  self.__books.get(title)
+    else:
+      self.__setTransactionStatus(title, "", Library.NOT_IN_LIBRARY)
+      bookStr = self.__books.get(title)
+    return bookStr
+      
+
+  # params: name of Patron who is member of library (str)
+  # invokes:  isMember(),  __setTransactionStatus()
+  # returns:  name of Patron (Patron) or None
+  def getPatron(self, name):
+    # your code here
+    if self.isMember(name):
+      self.__setTransactionStatus("", name, Library.LOOK_UP)
+      patronStr = self.__patrons.get(name, None)
+    else:
+      self.__setTransactionStatus("", name, Library.NOT_A_MEMBER)
+      patronStr = self.__patrons.get(name, None)
+    return patronStr
+
+  
+#-- Predicates ---------------------------------------------------------
+
+  # Checks if book is in library
+  # params: title - title of Book to search for in library (str)
+  # returns:  True if in library, False otherwise (bool)
+  def inLibrary(self, title):
+    # your code here
+    return (title in self.__books.keys())
+    
+
+  # Checks if person is member of library
+  # params: name - name of Patron to search for in library (str)
+  # returns:  True if member of library, False otherwise (bool)
+  def isMember(self, patronName):
+    # your code here
+    return (patronName in self.__patrons.keys())
+
+  # Checks if library has any books
+  # invokes:  len()
+  # returns:  True if library has any books, False otherwise (bool)
+  def hasBooks(self):
+    # your code here
+    return (len(self.__books) > 0)
+
+  # Checks if library has any members
+  # invokes:  len()
+  # returns:  True if library has any members, False otherwise (bool)
+  def hasMembers(self):
+    # your code here
+    return (len(self.__patrons) > 0)
+
+#-- Mutators -----------------------------------------------------------
+
+  # Set status for latest transaction  
+  # params:  title - title of Book participating in transaction (str)
+  #          name = name of Patron participating in transaction (str)
+  #          Note:  one of the above should be an empty string
+  #          index into TRANS_STATUS (int)
+  def __setTransactionStatus(self, title, name, index):
+    # your code here
+    self.__transactionStatus = title + name + \
+                               Library.TRANS_STATUS[index]
+    
+
+  # Adds book to library using its title as a key  
+  # params:  book - new Book to be added to library (Book)
+  # invokes:  getTitle() (Book), __setTransactionStatus()
+  def addBook(self, book):
+    # your code here
+    self.__books[book.getTitle()] = book
+    self.__setTransactionStatus(book.getTitle(), "", Library.ADD)
+
+  # Removes book from library and releases borrower if applicable
+  # params:  title - title of Book to remove from library (str)
+  # invokes:  pop() (list),
+  #           isCheckedOut() (Book), getPatron (Book)
+  #           decrement () (Patron)
+  #           inLibrary(), __setTransactionStatus()
+  def removeBook(self, title):
+    # your code here
+    if self.inLibrary(title):
+      removedBook = self.__books.pop(title)
+      self.__setTransactionStatus(title, "", Library.REMOVE)
+      if removedBook.isCheckedOut():
+        patron = removedBook.getPatron()
+        patron.decrement()
+    
+
+  # Adds patron to library using its name as a key
+  # params:  patron - new Patron to add to library (Patron)
+  # invokes:  getName (Patron), __setTransactionStatus()
+  def addPatron(self, patron):
+    # your code here
+    self.__patrons[patron.getName()] = patron
+    self.__setTransactionStatus("", patron.getName(), Library.JOIN)
+
+  # Removes the patron and returns borrowed books if any
+  # params:  name - name of Patron to remove from library (str)  
+  # invokes:  pop() (list),
+  #           hasCheckedOutBooks() (Patron) 
+  #           getPatron (Book), returnMe (Book)
+  #           isMember(), __setTransactionStatus()
+  def removePatron(self, name):
+    # your code here
+    if self.isMember(name):
+      removedPatron = self.__patrons.pop(name)
+      self.__setTransactionStatus("", name, Library.LEAVE)
+      if removedPatron.hasCheckedOutBooks():
+        for book in list(self.__books.values()):
+          if book.getPatron() == removedPatron:
+            book.returnMe()
+    
+    
+
+#-- Convert to Str -----------------------------------------------------
+
+  # Generates string representation of library
+  # creates:  StringGeneratorForDictionaries objects
+  # invokes:  str(), getName(), hasBooks(), hasMembers(),
+  #           getDictString() (StringGeneratorForDictionaries)
+  # returns:  str representation of Library object (str)  
+  def __str__(self):
+    if self.hasBooks():
+      bookDictStr = StringGeneratorForDictionaries(self.__books,\
+                                              "Book Dictionary")
+      bookStr = bookDictStr.getDictString()
+      if self.hasMembers():
+        patronDictStr = StringGeneratorForDictionaries(self.__patrons,\
+                                                  "Patron Dictionary")
+        patronStr = patronDictStr.getDictString()
+      else:
+        patronStr = "There are no patrons in the library"
+    else:
+      bookStr = "There are no books in the library"
+      if self.hasMembers():
+        patronDictStr = StringGeneratorForDictionaries(self.__patrons,\
+                                                  "Patron Dictionary")
+        patronStr = patronDictStr.getDictString()
+      else:
+        patronStr = "There are no patrons in the library"
+    return self.getName() +': \n'+ bookStr + "\n" + patronStr
+
+—————————————————————————————————————————————————————————————————————————————
+
+Python 3.4.3 (v3.4.3:9b73f1c3e601, Feb 23 2015, 02:52:03) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+Type "copyright", "credits" or "license()" for more information.
+>>> ================================ RESTART ================================
+>>> 
+
+----------------------------------------------------------------------
+Library: 
+
+
+----------------------------------------------------------------------
+Initial state:  
+The Python Library: 
+There are no books in the library
+There are no patrons in the library
+
+----------------------------------------------------------------------
+Adding patrons:
+Able has been added as a library member
+
+Able can borrow up to 3 books, 0 book(s) out
+Baker has been added as a library member
+
+Baker can borrow up to 3 books, 0 book(s) out
+Charlie has been added as a library member
+
+Charlie can borrow up to 3 books, 0 book(s) out
+Delta has been added as a library member
+
+Delta can borrow up to 3 books, 0 book(s) out
+Echo has been added as a library member
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+After adding patrons:  
+The Python Library: 
+There are no books in the library
+
+Patron Dictionary:
+
+Able can borrow up to 3 books, 0 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+----------------------------------------------------------------------
+Adding books:
+Absolut Python has been added to the library
+Title : Absolut Python
+Author: Anya
+Not checked out
+Waitlist: 
+
+Dummies for Python has been added to the library
+Title : Dummies for Python
+Author: Dullest
+Not checked out
+Waitlist: 
+
+Evolving Python has been added to the library
+Title : Evolving Python
+Author: Everest
+Not checked out
+Waitlist: 
+
+Python for Profit has been added to the library
+Title : Python for Profit
+Author: Prospero
+Not checked out
+Waitlist: 
+
+Python for Reptiles has been added to the library
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+After adding books:  
+The Python Library: 
+
+Book Dictionary:
+Title : Absolut Python
+Author: Anya
+Not checked out
+Waitlist: 
+
+Title : Dummies for Python
+Author: Dullest
+Not checked out
+Waitlist: 
+
+Title : Evolving Python
+Author: Everest
+Not checked out
+Waitlist: 
+
+Title : Python for Profit
+Author: Prospero
+Not checked out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able can borrow up to 3 books, 0 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+----------------------------------------------------------------------
+Taking out books:
+
+Absolut Python has been accessed
+Able member files have been accessed
+Able successfully checked out Absolut Python
+
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title : Dummies for Python
+Author: Dullest
+Not checked out
+Waitlist: 
+
+Title : Evolving Python
+Author: Everest
+Not checked out
+Waitlist: 
+
+Title : Python for Profit
+Author: Prospero
+Not checked out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able can borrow two more books, 1 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+Dummies for Python has been accessed
+Able member files have been accessed
+Able successfully checked out Dummies for Python
+
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able can borrow one more book, 2 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able can borrow one more book, 2 book(s) out
+Waitlist: 
+
+Title : Evolving Python
+Author: Everest
+Not checked out
+Waitlist: 
+
+Title : Python for Profit
+Author: Prospero
+Not checked out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able can borrow one more book, 2 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+Evolving Python has been accessed
+Able member files have been accessed
+Able successfully checked out Evolving Python
+
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title : Python for Profit
+Author: Prospero
+Not checked out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able must return book(s), 3 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+----------------------------------------------------------------------
+Taking out books again:
+
+Absolut Python has been accessed
+Able member files have been accessed
+Able has recorded an invalid transaction re:  Absolut Python
+
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title : Python for Profit
+Author: Prospero
+Not checked out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able must return book(s), 3 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+Dummies for Python has been accessed
+Baker member files have been accessed
+Baker has been put on waiting list for Dummies for Python
+
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Baker can borrow up to 3 books, 0 book(s) out
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title : Python for Profit
+Author: Prospero
+Not checked out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able must return book(s), 3 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+Evolving Python has been accessed
+Charlie member files have been accessed
+Charlie has been put on waiting list for Evolving Python
+
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Baker can borrow up to 3 books, 0 book(s) out
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Title : Python for Profit
+Author: Prospero
+Not checked out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able must return book(s), 3 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+Python for Profit has been accessed
+Delta member files have been accessed
+Delta successfully checked out Python for Profit
+
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Baker can borrow up to 3 books, 0 book(s) out
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Title: Python for Profit
+Author: Prospero
+Checked out: 
+Delta can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able must return book(s), 3 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow two more books, 1 book(s) out
+
+Echo can borrow up to 3 books, 0 book(s) out
+
+Python for Reptiles has been accessed
+Echo member files have been accessed
+Echo successfully checked out Python for Reptiles
+
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Baker can borrow up to 3 books, 0 book(s) out
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Title: Python for Profit
+Author: Prospero
+Checked out: 
+Delta can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title: Python for Reptiles
+Author: Nagini
+Checked out: 
+Echo can borrow two more books, 1 book(s) out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able must return book(s), 3 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow two more books, 1 book(s) out
+
+Echo can borrow two more books, 1 book(s) out
+
+----------------------------------------------------------------------
+Accessing non-existent book:
+Title : Unknowable Python
+Author: The Unknown Coder
+Not checked out
+Waitlist: 
+
+Unknowable Python is not in library
+
+----------------------------------------------------------------------
+Accessing non-existent patron:
+
+The Unknown Library Member can borrow up to 3 books, 0 book(s) out
+The Unknown Library Member is not a library member 
+
+----------------------------------------------------------------------
+Current state of library:
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Baker can borrow up to 3 books, 0 book(s) out
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Title: Python for Profit
+Author: Prospero
+Checked out: 
+Delta can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title: Python for Reptiles
+Author: Nagini
+Checked out: 
+Echo can borrow two more books, 1 book(s) out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able must return book(s), 3 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow two more books, 1 book(s) out
+
+Echo can borrow two more books, 1 book(s) out
+
+----------------------------------------------------------------------
+Remove patron:
+
+Echo can borrow two more books, 1 book(s) out
+Echo has been removed as a library member
+None
+Echo is not a library member 
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Baker can borrow up to 3 books, 0 book(s) out
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Title: Python for Profit
+Author: Prospero
+Checked out: 
+Delta can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able must return book(s), 3 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow two more books, 1 book(s) out
+
+----------------------------------------------------------------------
+Remove book:
+Title: Python for Profit
+Author: Prospero
+Checked out: 
+Delta can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Python for Profit has been removed from the library 
+None
+Python for Profit is not in library
+The Python Library: 
+
+Book Dictionary:
+Title: Absolut Python
+Author: Anya
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Baker can borrow up to 3 books, 0 book(s) out
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Able must return book(s), 3 book(s) out
+Waitlist: 
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able must return book(s), 3 book(s) out
+
+Baker can borrow up to 3 books, 0 book(s) out
+
+Charlie can borrow up to 3 books, 0 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+----------------------------------------------------------------------
+Return books:
+
+Absolut Python has been accessed
+Absolut Python has been accessed
+Able has returned Absolut Python
+
+
+Dummies for Python has been accessed
+Dummies for Python has been accessed
+Able has returned Dummies for Python
+Baker successfully checked out Dummies for Python
+
+
+Evolving Python has been accessed
+Evolving Python has been accessed
+Able has returned Evolving Python
+Charlie successfully checked out Evolving Python
+
+
+Python for Profit is not in library
+
+Python for Reptiles has been accessed
+Python for Reptiles has been accessed
+Echo has returned Python for Reptiles
+
+The Python Library: 
+
+Book Dictionary:
+Title : Absolut Python
+Author: Anya
+Not checked out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Baker can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Charlie can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able can borrow up to 3 books, 0 book(s) out
+
+Baker can borrow two more books, 1 book(s) out
+
+Charlie can borrow two more books, 1 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+----------------------------------------------------------------------
+Save library:
+Input the file name that will be used to store library records:  OriginalLib
+
+----------------------------------------------------------------------
+Load library:
+Input the file name that was used to store library records:  OriginalLib
+
+Library loaded:  
+The Python Library: 
+
+Book Dictionary:
+Title : Absolut Python
+Author: Anya
+Not checked out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Baker can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Charlie can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able can borrow up to 3 books, 0 book(s) out
+
+Baker can borrow two more books, 1 book(s) out
+
+Charlie can borrow two more books, 1 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+----------------------------------------------------------------------
+Can we maintain more than one?
+Start with original: 
+
+Library2 loaded from library:  
+The Python Library: 
+
+Book Dictionary:
+Title : Absolut Python
+Author: Anya
+Not checked out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Baker can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Charlie can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able can borrow up to 3 books, 0 book(s) out
+
+Baker can borrow two more books, 1 book(s) out
+
+Charlie can borrow two more books, 1 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+Library2 after book added:  
+The Python Library: 
+
+Book Dictionary:
+Title : Absolut Python
+Author: Anya
+Not checked out
+Waitlist: 
+
+Title : Cloud Atlas
+Author: Mitchell
+Not checked out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Baker can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Charlie can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able can borrow up to 3 books, 0 book(s) out
+
+Baker can borrow two more books, 1 book(s) out
+
+Charlie can borrow two more books, 1 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+----------------------------------------------------------------------
+Save library2:
+Input the file name that will be used to store library records:  NewLib
+
+----------------------------------------------------------------------
+Load library2:
+Input the file name that was used to store library records:  NewLib
+
+Library 2loaded:  
+The Python Library: 
+
+Book Dictionary:
+Title : Absolut Python
+Author: Anya
+Not checked out
+Waitlist: 
+
+Title : Cloud Atlas
+Author: Mitchell
+Not checked out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Baker can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Charlie can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able can borrow up to 3 books, 0 book(s) out
+
+Baker can borrow two more books, 1 book(s) out
+
+Charlie can borrow two more books, 1 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+
+----------------------------------------------------------------------
+Compare to original:
+Input the file name that was used to store original library records:  OriginalLib
+
+Original Library loaded:  
+The Python Library: 
+
+Book Dictionary:
+Title : Absolut Python
+Author: Anya
+Not checked out
+Waitlist: 
+
+Title: Dummies for Python
+Author: Dullest
+Checked out: 
+Baker can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title: Evolving Python
+Author: Everest
+Checked out: 
+Charlie can borrow two more books, 1 book(s) out
+Waitlist: 
+
+Title : Python for Reptiles
+Author: Nagini
+Not checked out
+Waitlist: 
+
+
+Patron Dictionary:
+
+Able can borrow up to 3 books, 0 book(s) out
+
+Baker can borrow two more books, 1 book(s) out
+
+Charlie can borrow two more books, 1 book(s) out
+
+Delta can borrow up to 3 books, 0 book(s) out
+>>> 

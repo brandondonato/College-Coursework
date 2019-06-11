@@ -1,0 +1,47 @@
+#include <iostream>
+#include <locale>
+#include <vector>
+
+using namespace std;
+
+class Dish{
+	public:
+		//Constructor
+		Dish();
+		//Heap functions
+		void maxHeapify();
+		//Heapsorting for shortest string
+		void minHeapifyLen(int parentIndex, int size);
+		//Heapsorting for alphabetical order
+		void minHeapifyAlpha(int parentIndex, int size);
+		void heapSortAlpha(int n);
+
+		//void heapInsert();
+		//void heapExtractMax();
+		//void heapExtractMin();
+
+		//Assignment fucntions
+		int insert(string s); //Works
+		int find(string s); //Works
+		bool capitalize(int k); //
+		bool allcaps(int k);
+		bool truncate(int k, int i);
+		string getshortest(); //Works
+		string getfirst(); //Works
+
+		//Getters and Setters
+		void setSize(int i);
+		int getSize();
+		void pushStr(string s);
+
+		//Print function
+		void printHeap();
+		
+
+	private:
+		//Assignment variables
+		vector<string> strOrder;
+		vector<int> lenHeap;
+		vector<int> alphaHeap;
+		int size;
+};

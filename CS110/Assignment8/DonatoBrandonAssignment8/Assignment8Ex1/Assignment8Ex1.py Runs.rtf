@@ -1,0 +1,206 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 """\
+Donato, Brandon\
+bdonato1@binghamton.edu\
+CS 110 - B57\
+Jia Yang\
+Assignment8Ex1\
+"""\
+# Imports --------------------------------------------------------------------\
+\
+import random\
+\
+# Functions -------------------------------------------------------------------\
+\
+# Creates list of random integers\
+# returns the list of random integers (list)\
+def listGenerator():\
+  newList = []\
+  for a in range(random.randint(1,25)):\
+    newList.append(random.randint(1,25))\
+  return newList                \
+  \
+# Check that the starting and limiting indicies are positive integers\
+# param startIndex (str) - The beginning index\
+# param limitIndex (str) - The limiting index\
+# invoke str.isdigit()\
+# returns True when valid, False otherwise (bool)\
+def integerValidation(startIndex,limitIndex):\
+  return startIndex.isdigit() and limitIndex.isdigit()\
+\
+# Checks index inputs are valid inputs within the range of the list's\
+#   index\
+# param startIndex (str) - The beginning index\
+# param limitIndex (str) - The limiting index\
+# param aList (list) - The inital list\
+# invoke len()\
+# invoke int()\
+# invoke integerValidation()\
+# returns True when valid, False otherwise (bool)\
+def indexValidation(startIndex,limitIndex,aList):\
+  return (integerValidation(startIndex,limitIndex)) and\\\
+         (int(limitIndex) > int(startIndex)) and\\\
+         (int(limitIndex) <= (len(aList) - 1))\
+\
+# Converts index inputs from (str) to (int)\
+# param indexStr (str) - The index string\
+# invoke int()\
+# returns indexInt (int) - The index integer\
+def indexConversion(indexStr):\
+  indexInt = int(indexStr)\
+  return indexInt\
+\
+# Checks the mySlice() output against Python's slice operation\
+# param theSlice (list) - The slice computed from mySlice()\
+# param pythonsSlice (list) - The slice computed from Python's slice\
+#   operator\
+# returns True when valid, False otherwise (bool)\
+def mySliceValidation(theSlice, pythonsSlice):\
+  return theSlice == pythonsSlice\
+\
+# Creates a sublist when given a list, starting index and limiting index\
+# param aList (list) - The given list\
+# param startIndex (int) - The starting index\
+# param limitIndex (int) - The limiting index\
+# returns the new sublist (list)\
+def mySlice(aList,startIndex,limitIndex):\
+  newList = []\
+  for i in range(startIndex, limitIndex):\
+    newList.append(aList[i])\
+    ##print(newList)\
+  return newList\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+"""\
+Donato, Brandon\
+bdonato1@binghamton.edu\
+CS 110 - B57\
+Jia Yang\
+Assignment8Ex1\
+"""\
+\
+"""\
+Analysis:\
+\
+Write a program that returns a slice when given a list, a starting index\
+and a limit index. Compare the results with Python's slice operation.\
+\
+Output to monitor:\
+  theSlice (list) - Slice created by the program\
+  pythonsSlice (list) - Slice created using Python operator\
+\
+Input from keyboard:\
+  startIndex (int) - Starting slice index\
+  limitIndex (int) - Limiting slice index\
+\
+Tasks allocated to functions:\
+  All functions are located in listFunctionsModule\
+  integerValidation() - Simple predicate function\
+  indexValidation() - Simple predicate function\
+  indexConversion() - Converts from (str) to (int)\
+  mySliceValidation() - Simple predicate function\
+  mySlice()\
+  \
+"""\
+# Imports --------------------------------------------------------------------\
+\
+import listFunctionsModule\
+\
+# Main ------------------------------------------------------------------------\
+\
+# Generates the initial list that will be sliced, the starting slice index, and\
+#   the limiting slice index\
+# Generates a slice using mySlice() and compares it to Python's slice\
+#   operation\
+def main():\
+  # Generates and prints the initial list, the list's length and the program's\
+  #   purpose\
+  aList = listFunctionsModule.listGenerator()\
+  print("The list is: ", aList, "and its length is", len(aList),"\\n")\
+  print("This program will create a slice of a list without using the\\\
+ slice operator \\n")\
+\
+  # Priming read and repeat\
+  startIndex = input("Enter the starting index for the slice\\nOr press\\\
+ <Enter> to quit: ")\
+  while startIndex:\
+\
+    # Gets the limiting index, validates inputted data and converts as\
+    #  necessary\
+    limitIndex = input("Enter the limiting index for the slice: ")\
+    while not listFunctionsModule.\\\
+          indexValidation(startIndex,limitIndex,aList):\
+      print("One or both of your indices are invalid")\
+      startIndex = input("Enter the starting index for the slice: ")\
+      limitIndex = input("Enter the limiting index for the slice: ")\
+    startIndex = listFunctionsModule.indexConversion(startIndex)\
+    limitIndex = listFunctionsModule.indexConversion(limitIndex)\
+\
+    # Prints out the slice generated by mySlice() and the slice generated\
+    #  by Python\
+    theSlice = listFunctionsModule.\\\
+               mySlice(aList,startIndex,limitIndex)\
+    print("My slice is: %-s" % theSlice)\
+    pythonsSlice = aList[startIndex:limitIndex]\
+    print("Python's slice is: %-s " % pythonsSlice)\
+\
+    # Compares the slices generated to see whether they are equal or not\
+    #  and prints whether mySlice() makes successful slices or not\
+    if listFunctionsModule.\\\
+       mySliceValidation(theSlice,pythonsSlice):\
+      print("Success! The two slices are equal.\\n")\
+    else:\
+      print("The slices weren't equal. Please report this problem.\\n")\
+\
+    # Continuation read\
+    startIndex = input("Enter the starting index for the slice\\nOr press\\\
+ <Enter> to quit: ")\
+    \
+main()\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Python 3.4.3 (v3.4.3:9b73f1c3e601, Feb 23 2015, 02:52:03) \
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin\
+Type "copyright", "credits" or "license()" for more information.\
+>>> WARNING: The version of Tcl/Tk (8.5.9) in use may be unstable.\
+Visit http://www.python.org/download/mac/tcltk/ for current information.\
+================================ RESTART ================================\
+>>> \
+The list is:  [13, 9, 14, 8, 2, 24, 3, 23, 8, 11, 22, 13, 8, 8, 18, 13, 16, 3] and its length is 18 \
+\
+This program will create a slice of a list without using the slice operator \
+\
+Enter the starting index for the slice\
+Or press <Enter> to quit: -1\
+Enter the limiting index for the slice: 2\
+One or both of your indices are invalid\
+Enter the starting index for the slice: 3\
+Enter the limiting index for the slice: 1\
+One or both of your indices are invalid\
+Enter the starting index for the slice: 1\
+Enter the limiting index for the slice: 18\
+One or both of your indices are invalid\
+Enter the starting index for the slice: 1\
+Enter the limiting index for the slice: 7\
+My slice is:  [9, 14, 8, 2, 24, 3]\
+Python's slice is:  [9, 14, 8, 2, 24, 3]\
+Success! The two slices are equal.\
+\
+Enter the starting index for the slice\
+Or press <Enter> to quit: 0\
+Enter the limiting index for the slice: 6\
+My slice is:  [13, 9, 14, 8, 2, 24]\
+Python's slice is:  [13, 9, 14, 8, 2, 24]\
+Success! The two slices are equal.\
+\
+Enter the starting index for the slice\
+Or press <Enter> to quit: \
+>>> \
+}

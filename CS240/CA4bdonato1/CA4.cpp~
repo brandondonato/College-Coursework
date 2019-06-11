@@ -1,0 +1,39 @@
+#include "Dish.h"
+#include "Node.h"
+
+int main(){
+	Dish dish = Dish();
+
+	//dish.insert("a"); 
+	dish.insert("a");
+	dish.insert("d");
+	dish.insert("m");
+	//dish.insert("a");
+	dish.insert("r");
+	dish.insert("f");
+	dish.insert("l");
+	//dish.insert("ama");
+
+	dish.printHeap();
+
+	dish.heapSortLen(dish.getSize());
+	dish.printHeap();
+
+	dish.insert("a");
+	
+	dish.heapSortLen(dish.getSize());
+	dish.printHeap();
+
+	/*
+	dish.heapSortLen(dish.getSize());
+
+	dish.printHeap();
+
+	int i = dish.find("a");
+	int j = dish.find("z");
+
+	cout << i << endl << j << endl;
+	*/
+
+	return 0;
+}

@@ -1,0 +1,132 @@
+Brandon Donato
+CS471 Lab 2 
+
+Problem 0A:
+
+	1. 
+		Clauses: 
+			vertical(line(point(X,Y),point(X,Z))).
+			horizontal(line(point(X,Y),point(Z,Y))).
+			line(point(X,Y),point(X,Z)).
+			point(X,Y).
+			point(X,Z).
+		Predicates:
+			vertical(line(point(X,Y),point(X,Z))).
+			horizontal(line(point(X,Y),point(Z,Y))).
+		Rules: 
+			NONE
+		Facts: 
+			vertical(line(point(X,Y),point(X,Z))).
+			horizontal(line(point(X,Y),point(Z,Y))).
+	
+	2.
+		Constants:
+			vertical
+			line
+			point
+		Variables:
+			X, Y, Z
+		Complex Structure: 
+			vertical(line(point(X,Y),point(X,Z))).
+			horizontal(line(point(X,Y),point(Z,Y))).
+			line(point(X,Y),point(X,Z)).
+			point(X,Y).
+			point(X,Z).
+
+
+Problem 0B:	
+	
+	1.
+		Clauses:
+			numeral(0).
+			numeral(succ(X)) :-  numeral(X).
+			succ(X).
+			succ(Z).
+			numeral(X).
+			add(0,Y,Y).
+			add(succ(X),Y,succ(Z)) :- add(X,Y,Z).
+			add(X,Y,Z).
+		Predicates:
+			add(0,Y,Y).
+			add(X,Y,Z).
+			add(succ(X),Y,succ(Z))
+			numeral(0).
+			numeral(X).
+			numeral(succ(X))
+			succ(X).
+			succ(Z).
+		Facts:
+			add(0,Y,Y).
+			numeral(0).
+		Rules:
+			numeral(succ(X)) :-  numeral(X).
+			add(succ(X),Y,succ(Z)) :- add(X,Y,Z).
+			
+	2. 
+		Constants:
+			numeral
+			add
+			succ
+			0
+		Variables:
+			X,Y,Z
+		Complex Structures:
+			numeral(succ(X)) :-  numeral(X).
+			succ(X).
+			succ(Z).
+			numeral(0).
+			numeral(X).
+			add(0,Y,Y).
+			add(succ(X),Y,succ(Z)) :- add(X,Y,Z).
+			add(X,Y,Z).
+Problem 0C:
+	
+	X = 1+2. 			//X = 1+2.
+	X is 1+2. 			//X = 3.	
+	1+2=1+2. 			//true.
+	1+2=2+1. 			//false.
+	1+2=3. 				//false
+	1+2 is 3. 			//false.
+	3 is 1+2. 			//true.
+	3 =< 6. 			//true.
+	6 =< 3. 			//false.
+	X = Y, Y = Z, Z = 3. 		//X = Y, Y = Z, Z = 3.
+	X = Y, Y = Z, Z = 3, X = 4. 	//false.
+	T = (X,Y), X = a, Y = b. 	//T = (a, b), X = a, Y = b.
+	X = [1,2,3], [H|T] = X. 	//X = [1, 2, 3],H = 1,T = [2, 3].
+	X = [1,2,3], [H1,H2|T] = X. 	//X = [1, 2, 3],H1 = 1,H2 = 2,T = [3].
+	X = [1], [H|T] = X. 		//X = [1],H = 1,T = []. 
+	X = [1], Y = [2|X].		//X = [1],Y = [2, 1].
+	add(0,succ(succ(0)),Y).		//ERROR: toplevel: Undefined procedure: add/3 (DWIM could not correct goal)
+	
+	help(member).			//True  if  Elem is  a member  of  List.   The  SWI-Prolog  definition
+    					  differs  from the classical  one.   Our definition avoids  unpacking
+    					  each  list  element  twice  and provides  determinism  on  the  last
+   					  element.  E.g.  this is deterministic:
+
+    					____________________________________________________________________|                                              
+                     							 |
+    					||____member(X,_[One])._____________________________________________ ||
+
+         						author Gertjan van Noord
+
+									true.
+
+	X = 3, member(X, [Y]). 		//X=Y, Y=3.
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

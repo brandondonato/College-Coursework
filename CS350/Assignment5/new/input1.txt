@@ -1,0 +1,9 @@
+CREATE new_file
+WRITE new_file b 0 10
+WRITE new_file a 5 10
+WRITE new_file c 10 1
+LIST
+CREATE this_file
+LIST
+CREATE make_file
+LIST

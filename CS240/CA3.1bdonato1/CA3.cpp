@@ -1,0 +1,133 @@
+//#ifdef CA3_CPP
+//#define CA3_CPP
+#include "FBLUser.h"
+#include "FBLUserLL.h"
+#include "FBLPost.h"
+#include "FBLPostLL.h"
+#include <sstream>
+#include <ostream>
+#include <iostream>
+#include <string>
+
+int main(){
+	bool menuOne = true; //Menu 1 Exit param
+	bool menuTwo = true; //Menu 2 Exit param
+	string oneInput; // Menu 1 input
+	string twoInput; // Menu 2 input
+
+	string command; //Command Name
+	string userId;
+	string pass;
+	string fName;
+	string lName;
+
+	string input1[5];
+	string input2[2];
+	int inputIndex = 0;
+
+	FBLUserLL *linkedList = new FBLUserLL(); //The actual linked list
+
+	while(menuOne == true){
+		menuTwo = true;
+		cout << "Please enter a command: "<<endl<<"CREATE <Userid> <Password> <First> <Last>"
+		<<endl<<"LOGIN <Userid> <Password>" <<endl<<"QUIT" << endl << endl;
+		//Fills the array with a list of commands
+		getline(cin, oneInput);
+		stringstream ssin(oneInput);
+		while(ssin.good() && (inputIndex < 5)){
+			ssin >> input1[inputIndex];
+			inputIndex++;
+		}
+		inputIndex = 0;
+
+		// cout << input1[0] << input1[1] << input1[2];
+		if((input1[0] == "CREATE") && (sizeof(input1)/sizeof(input1[0]) == 5) ){
+			userId = input1[1];
+			pass = input1[2];
+			fName = input1[3];
+			lName = input1[4];
+			//Create the new user
+			if(linkedList->nameCheck(userId) == true){
+				linkedList->addUser(userId, pass, fName, lName);
+				cout << "Succesfully created new user." << endl;
+			}else{
+				cout << "This username has been taken. Please try again." << endl << endl;
+			}
+			
+			//Clear the array
+			for(int i = 0; i < 5; i++){
+				input1[i].clear();
+			}
+		}else if((input1[0] == "LOGIN")){
+			userId = input1[1];
+			pass = input1[2];
+
+			if(linkedList->login(userId, pass) == true){
+				//string input2[2];
+				//Get the user we need for the posts
+				FBLUser *user = linkedList->getUser(userId, pass);
+				int inputIndex2 = 0;
+				cout << "Login Successful." << endl << endl;
+				while(menuTwo == true){
+					//Second level menu
+					cout << "Please enter a command: POST <text>"<<endl<<"READ"<<endl<<"LOGOUT"<< endl << endl;
+					getline(cin, twoInput); //Gets just the command from the rest of the input
+					stringstream ssin2(twoInput);
+					while(ssin2.good() && (inputIndex2 < 1)){
+						ssin2 >> input2[inputIndex];
+						inputIndex2++;
+					}
+					input2[inputIndex2] = ssin2.str(); //Rest of the post goes here
+					inputIndex2 = 0; //Reset the index
+
+					//Fix the post by removing POST
+					input2[1] = input2[1].erase(0, 5);
+
+					if(input2[0] == "POST" && (sizeof(input2)/sizeof(input2[0]) == 2)){
+						user->postList->addPost(input2[1]);
+						cout << "Succesfully posted." << endl << endl;
+						//cout << user->postList->listTail->post;
+						//Clear the list
+						for(int i = 0; i < 2; i++){
+							input2[i].clear();
+						}
+					}else if(input2[0] == "READ"){
+						FBLPost *temp = user->postList->listHead;
+						if(temp == nullptr){//If there are no posts left
+							cout << "This user has no posts" << endl << endl;
+						}else{//Delete and read the post
+							while(temp->nextPost != nullptr){
+								temp = temp->nextPost;
+							}
+							cout << temp->post << endl;
+							user->postList->deleteTail();
+						}
+						for(int i = 0; i < 1; i++){
+								input2[i].clear();
+							}
+					}else if(input2[0] == "LOGOUT"){
+						menuTwo = false;
+						cout<< "Succesfully logged out." << endl << endl;
+					}else{
+						cout << "Please enter a valid command." << endl << endl;
+					}
+				}
+			}else{
+				cout << "Please enter a valid username and password" << endl << endl;
+			}
+			for(int i = 0; i < 3; i++){
+				input1[i].clear();
+			}
+		}else if((input1[0] == "QUIT")){
+			//Perform the exit operation
+			menuOne = false;
+			for(int i = 0; i < 1; i++){
+				input1[i].clear();
+			}
+		}else{
+			cout << "Please enter a valid command."<< endl << endl;
+		}
+	}
+	return 1;
+}
+//#endif

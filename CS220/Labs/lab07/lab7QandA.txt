@@ -1,0 +1,53 @@
+Answer questions 1-4 with the optimization set at its original value, "OPT=00".
+
+1. Scan through the x86Math.s and x86Math.objdump.txt files side by side.
+	A. Do these two files contain similar sets of x86 instructions for the "add" function? 	Yes
+	B. Do both files refer back to the original C code from which they were derived? 	Yes
+	C. Does the gdb disassembly match the x86 instructions in both the .s and objdump files? No
+	D. Which format of all three do you find easier and why? 
+	
+		I find looking at the objdump.txt to be easier becuase there are the full set of commands commands but there are less lines than the .s file and it's more detailed than the gdb command. Looking at the objdump.text and the .s file gives you a much more detailed view, allowing you to see the values being moved in memory as well as the values being pushed and popped off of the stack rather than the less commands from gdb.
+		
+
+2. How many assembler instructions are required for:
+	A. the "add" function :		15 instructions
+	B. the "subtract" function:	14 instructions
+	
+3. How many bytes are needed for the x86 version of the x86Math program? (You can find this by scrolling
+	to the bottom of file x86Math.s and finding the hex value associated with the last instruction in 
+	the file.) 367 bytes
+	
+4. Find the x86 add instruction that adds op1+op2 in the add function.
+	A. What line number is that instruction at in the x86Math.s file? : line 154
+	B. What hexadecimal address contains that instruction from the x86Math.objdump.txt file? :  40063d
+	
+5. In gdb, just before you execute the instruction at 0x000000000040063d for the first time:
+	A. What is the value in the "edx" register? : 0x4 (4)
+	B. What is the value in the "eax" register? : 0x8 (8)
+	C. After you execute the instruction, what is the value in the "eax" register? : 0xc (12)
+	
+Answer questions 6-8 with the optimization variable set to "OPT=O1" to do some optimization
+
+6. Is it still possible to map directly from C code to x86 assembler instructions? What has happened?
+	
+		The majority of the commands have gone away. Only certian commands remain in the .s file and the majority of the instructions in the objdump file are no longer there. 
+	
+	
+7. In gdb, what x86 instruction is about to get executed when you reach the first breakpoint in the "add" function?
+	Instruction 0x000000000040058c
+
+8. 
+	A. How many bytes are needed for this x86 version of the x86Math program? 132 bytes
+	B. How does this compare to the length of the previous version? About 235 bytes less
+	C. Why is there a difference? The optimization variable was changed to 1, which shortens the code 										making it less bytes
+	 
+Answer questions 9-10 with the optimization value set to "OPT=O0 -DSIMPLE"
+
+9. 
+	A. How many bytes are needed for this x86 version of the x86Math program? 295 bytes
+	B. How does this compare to previous versions? There are less bytes than the first version, but more 														than the second version
+	C. Does the optimizer do a better job than a human in this case? The optimizer does a better job 																			than the human in this case.
+
+10. Compare the x86 instructions for the add function with the x86 instructions for the add function in 	the first part of the lab. What is the main difference?
+
+		The main difference is is that it does not use as many registers to store the values given to the parameters. Therefore, it needs less steps to add the numbers together.

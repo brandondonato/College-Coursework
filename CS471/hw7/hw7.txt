@@ -1,0 +1,118 @@
+Seung Woo Lee
+Brandon Donato
+CS471 Assignment 7
+
+
+1. Explain the distinction between the lifetime of a name-to-object binding and its visibility. What do we mean by the scope of a name-to-object binding? Give three concrete examples drawn from programming languages with which you are familiar in which a variable is live but not in scope.
+
+	- The difference between the lifetime of name-to-object binding and visibility is the following: the lifetime details the length of which a name is bound to an object in memory, and the visibility is depending upon the scope, whether or not a specific name-to-object binding can be used as intended. An object may not be visible (you enter a new scope or a subroutine) but it still exists in memory. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+2. As part of the development team at MumbleTech.com, Janet has written a list manipulation library for C that contains, among other things, the code in Figure 3.16.
+	(a) Accustomed to Java, new team member Brad includes the following code in the main loop of his program:
+
+	list_node* L = 0;
+	while (more_widgets()) {
+		L = insert(next_widget(), L);
+	}
+	L = reverse(L);
+	
+	Sadly, after running for a while, Brad’s program always runs out of memory and crashes. Explain what’s going wrong.
+	
+	- In this example, the list_node pointer, L creates temporary copies of itself to transfer data over. When reversing the list, the program creates a temporary variable the same exact size as L, and then reassigns L to the temporary variable. Because of this, you use effectively double the memory you need to.
+
+	(b) After Janet patiently explains the problem to him, Brad gives it another try:
+	
+	list_node* L = 0;
+	while (more_widgets()) {
+		L = insert(next_widget(), L);
+	}
+	list_node* T = reverse(L);
+	delete_list(L);
+	L=T;
+
+	This seems to solve the insufficient memory problem, but where the program used to produce correct results (before running out of memory), now its output is strangely corrupted, and Brad goes back to Janet for advice. What will she tell him this time?
+
+	- In this example, because list_node L and list_node T point to the same list in memory, when you delete list L and reassigning L to T, you are stating to the machine that the memory formally occupied by list L can be used for other information. This becomes an issue because list T pointed to where list L was, and after deleting the list, now list T points to memory that may be altered during the runtime of the program, leading to undefined behavior. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+3. As noted in Section 3.6.3, C# has unusually sophisticated support for first class subroutines. Among other things, it allows delegates to be instantiated from anonymous nested methods, and gives local variables and parameters unlimited extent when they may be needed by such a delegate. Consider the implications of these features in the following C# program:
+
+	using System;
+	public delegate int UnaryOp(int n);
+		// type declaration: UnaryOp is a function from ints to ints
+	
+	public class Foo {
+		static int a = 2;
+		static UnaryOp b(int c) {
+			intd=a+c;
+			Console.WriteLine(d);
+			return delegate(int n) { return c + n; };
+		}
+		public static void Main(string[] args) {
+			Console.WriteLine(b(3)(4));
+		}
+	}
+
+	What does this program print? Which of a, b, c,and d, if any, is likely to be statically allocated? Which could be allocated on the stack? Which would need to be allocated in the heap? Explain.
+
+	- The program should print 5 and 7. 'c' needs to be allocated dynamically (heap), as its taken in as a parameter into the b() function and referenced in the delegated function. 'a' is allocated statically (stack) since it is statically initialized to 2. 'd' should be allocated dynamically since it is dependent upon 'c.' 'b' is allocated statically considering it is a function that is not delegated.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+4. Consider the following pseudo code:
+	x : integer := 9
+	y : integer := 20
+	procedure add()
+		x := x + y
+	procedure second(P : procedure)
+		x : integer := 3
+		P()
+	procedure first()
+		y : integer := 2
+		second(add)
+
+	first()
+	write integer(x)
+ 
+	(a) What does this program print if the language uses static scoping?
+	
+	- The program would print: 29 because it does not consider the changes made to x or y prior to executing the add() procedure.
+
+	(b) Explain why 11 is printed out if the language uses dynamic scoping with deep binding.
+
+	- The program would print: 9 because with dynamic scoping with deep binding, the procedure call is bound to the variables when it is called/passed. This implies when add() is passed to second(), at this point x = 9, and y = 2, therefore x + y = 11.
+
+	(c) Explain why 9 is printed out if the language uses dynamic scoping with shallow binding.
+
+	- The program would refer to the last function call, which would write x = 9 from its global scope.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+5. You may be surprised by the output. Perl 5 allows named subroutines to nest, but does not create closures for them properly. Rewrite the code above to create a reference to an anonymous local subroutine and verify that it does create closures correctly. Add the line use diagnostics; to the beginning of the original version and run it again. Based on the explanation this will give you, speculate as to how nested named subroutines are implemented in Perl 5.
+
+	- Based on the description from the diagnostics, I believe the subroutines are no longer related after the first execution, therefore they keep their own references to variables. This implies that all subroutines can be called from any scope, and variables within subroutines are visible to all subroutines. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+6. Now comment out the second line (y=2) and run the script again. Explain what happens. Restate our claim about scoping more carefully and precisely.
+
+	- Commenting out the second line crashes the program because there is no variable y that was defined in the function foo. This is because the variable y in the nested function is defined only within that block and is popped out of the stack after block is called. After it is popped, y does not exist anymore.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+7. We noted in Section 6.1.1 that most binary arithmetic operators are left associative in most programming languages. In Section 6.1.4, however, we also noted that most compilers are free to evaluate the operands of a binary operator in either order. Are these statements contradictory? Why or why not?
+
+	- These statements are not contradictory because how compilers evaluate the operands do not change the precedences of the operands. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+8. Is &(&i) ever valid in C? Explain.
+	
+	- No &(&i) is not valid in C because you need a lvalue for the operand & and &i is a rvalue.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+9. In Section 6.1.2 (“Orthogonality”), we noted that C uses = for assignment and == for equality testing. The language designers state: “Since assignment is about twice as frequent as equality testing in typical C programs, it’s appropriate that the operator be half as long” [KR88, p. 17]. What do you think of this rationale?
+
+	- Even if the assignment operator is used more frequently and maybe 'should' be half as long, the two operands are too similar and can be mistaken for another. They should look completely different to show the differentiation (ex. Fortran uses .eq to show the equality)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+10. Explain the notion of definite assignment in Java and C#.
+
+	- When a variable is declared, it must be assigned a value if any function or method wants access of the variable
+

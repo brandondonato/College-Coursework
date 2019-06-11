@@ -1,0 +1,70 @@
+Seung Woo Lee
+Brandon Donato
+CS471 Assignment 8
+
+1.
+	CYU 8: There is a distinction between mutable and immutable values because of the difference between reference models and value models in programming languages. The distinction in reference models is because every variable is an l-value, implying when the variable is used in the context of an r-value, the value must be dereferenced. Because of dereferencing, the ability to change the values may differentiate how you use the variables.
+	
+	CYU 9: Orthogonality means that the language can use any of its features in any combination, so long as the features are deterministic and consistent. (pg. 233)
+
+	CYU 11: This ensures that that the address computation only occurs once, and it looks aesthetically better. (pg. 236)
+
+2.
+	CYU 14: Definite assignment in Java and c# refers to the control flow of the program, where every possible expression must assign a value to every variable in the expression. (pg. 239)
+
+	CTU 16: It is impossible to catch all uninitialized variables at compile time because you cannot generalize all initializations to occur before runtime.
+
+3.
+	a. Assume that, wherever there is an option, operands are evaluated left to right:
+	
+	int b = (a++ || ++a) >= (a++ && ++a);			a=0                   b=?
+	=====================================		 	===		      ===
+	
+	(0 || ++a) >= (a++ && ++a)				1		      ---
+	(0 || 2 ) >= (a++ && ++a)				2		      ---
+	(0 || 2 ) >= (2 && ++a)					3		      ---
+	(0 || 2) >= (2 && 4)					4		      ---
+	1 >= (2 && 4)						4		      ---
+	1 >= 1							4		       1 (default true)
+
+
+	b. Assume that, wherever there is an option, operands are evaluated right to left:
+
+	int b = (a++ || ++a) >= (a++ && ++a);			a=0                   b=?
+	=====================================		 	===		      ===
+	
+	(a++ || ++a) >= (a++ && 1)				1		      ---
+	(a++ || ++a) >= (1 && 1)				2		      ---
+	(a++ || 3) >= (1 && 1)					3		      ---
+	(3 || 3) >= (1 && 1)					4		      ---
+	(3 || 3) >= 1						4		      ---
+	1 >= 1							4		       1 (default true)
+
+
+4. C++ and Java loops are often written with empty bodies by placing all side effects into the tests, such as in the following two examples:
+    i = 0;
+    while (a[i++] != 0);
+
+    for (i = 0; a[i] != 0; i++);
+
+Are these loops equivalent? Explain.
+
+    - Yes the two loops are equivalent. In the while loop, i starts with 0 and is post incremented. Therefore, it will first evaluate i as 0 then will increment later. For the for loop, i starts as 0 and is evaluated. Then i is incremented.
+
+5. IN FILE problem5.rb
+
+6. IN FILE problem6.py
+
+8. Page 311/12 CYU 2, 9, 10
+
+	What does it mean for a language to be strongly typed? Statically typed? What prevents, say, C from being strongly typed?
+	
+	- A language is strongly typed when a variable type cannot be implicitly coerced into a different type and needs to be explicitly converted. Statically typed means that it is strongly typed and type checking can be performed at compile time. Void pointers prevent C from being strongly typed.
+	
+	What is polymorphism? What distinguishes its parametric and subtype varieties? What are generics?
+	
+	- Polymorphism is when an object can take on many form depending on their data types or class. Parametric polymorphism is when it takes a set of types as parameters and subtype polymorphism is when it is designed to work with certain type T. Generics is explicit parametric polymorphism (templates).
+	
+	What is the difference between discrete and scalar types?
+	
+	- Discrete types are data types that are countable and have a well-defined notion of predecessor and successor for each element whereas scalar types are constituted by discrete, rational, real, and complex types.

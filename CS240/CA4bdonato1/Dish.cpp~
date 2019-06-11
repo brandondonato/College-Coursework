@@ -1,0 +1,211 @@
+#include "Dish.h"
+
+Dish::Dish(){
+	this->size = 0;
+}
+
+//Heap Functions for strings
+void Dish::minHeapifyAlpha(int parentIndex, int size){
+	int leftChild = 2*parentIndex + 1;
+	int rightChild = 2*parentIndex + 2;
+	int smallest = parentIndex;
+	//Debug
+	//cout << leftChild << " "<< rightChild << endl;
+
+	if(leftChild < this->size && strOrder.at(alphaHeap.at(leftChild)) < strOrder.at(alphaHeap.at(smallest))){
+		//If the left child is smaller, make it smallest
+		smallest = leftChild;
+		//cout << "Here1" << endl;
+	}else{
+		//Else, make the parent smallest
+		smallest = parentIndex;
+		//cout << "Here2" << endl;
+	}
+
+	if(rightChild < this->size && strOrder.at(alphaHeap.at(rightChild)) < strOrder.at(alphaHeap.at(smallest))){
+		//If the right child is smaller than the parent, the right child is smallest
+		smallest = rightChild;
+		//cout << "Here3" << endl;
+	}
+
+	if(smallest != parentIndex){
+		//cout << "Here4" << endl;
+		//Swap the smallest with the parent
+		int tempI = this->alphaHeap.at(parentIndex);
+		this->alphaHeap.at(parentIndex) = this->alphaHeap.at(smallest);
+		this->alphaHeap.at(smallest) = tempI;
+		/*
+		string temp = this->strOrder.at(parentIndex);
+		this->strOrder.at(parentIndex) = this->strOrder.at(smallest);
+		this->strOrder.at(smallest) = temp;
+		*/
+		
+	
+		//Continue recursively
+		minHeapifyAlpha(smallest, size);
+	}
+}
+
+void Dish::heapSortAlpha(int size){
+	//Build the actual heap
+	for(int i = (size/2)-1; i>=0; i--){
+		//cout << i << endl;
+		minHeapifyAlpha(i, size);
+	}
+
+	for(int i=size-1; i>=0; i--){
+		//Move the current root to the end
+		int tempI = this->alphaHeap.at(0);
+		this->alphaHeap.at(0) = this->alphaHeap.at(i);
+		this->alphaHeap.at(i) = tempI;	
+	
+		/*
+		string temp = this->strOrder.at(0);
+		this->strOrder.at(0) = this->strOrder.at(i);
+		this->strOrder.at(i) = temp;
+		*/
+		
+
+		//minHeapify the reduced heap
+		minHeapifyAlpha(0,i);
+	}
+
+}
+
+void Dish::minHeapifyLen(int parentIndex, int size){
+	int leftChild = 2*parentIndex + 1;
+	int rightChild = 2*parentIndex + 2;
+	int smallest = parentIndex;
+
+	if(leftChild < this->size && strOrder.at(leftChild).length() < strOrder.at(smallest).length()){
+		//If the left child is smaller, make it smallest
+		smallest = leftChild;
+		//cout << "Here1" << endl;
+	}else{
+		//Else, make the parent smallest
+		smallest = parentIndex;
+		//cout << "Here2" << endl;
+	}
+
+	if(rightChild < this->size && strOrder.at(rightChild).length() < strOrder.at(smallest).length()){
+		//If the right child is smaller than the parent, the right child is smallest
+		smallest = rightChild;
+		//cout << "Here3" << endl;
+	}
+
+	if(smallest != parentIndex){
+		//cout << "Here4" << endl;
+		//Swap the smallest with the parent
+		string temp = this->strOrder.at(parentIndex);
+		this->strOrder.at(parentIndex) = this->strOrder.at(smallest);
+		this->strOrder.at(smallest) = temp;
+		//Continue recursively
+		minHeapifyLen(smallest, size);
+	}
+}
+
+void Dish::heapSortLen(int size){
+	//Build the actual heap
+	for(int i = (size/2)-1; i>=0; i--){
+		//cout << i << endl;
+		minHeapifyLen(i, size);
+	}
+
+	for(int i=size-1; i>=0; i--){
+		//Move the current root to the end
+		string temp = this->strOrder.at(0);
+		this->strOrder.at(0) = this->strOrder.at(i);
+		this->strOrder.at(i) = temp;
+
+		//minHeapify the reduced heap
+		minHeapifyLen(0,i);
+	}
+
+}
+
+//Assignment Functions
+int Dish::insert(string s){
+	//Inserts a string to the end of the heap
+	if(this->size >= 1024){
+		return -1;
+	}else{
+		this->pushStr(s);
+		return this->size;
+	}
+}
+
+int Dish::find(string s){
+	//Finds the string in the heap and returns the address in log(N) time
+	for(int i = 0; i < this->size; i++){
+		if(s == strOrder.at(i)){
+			return i;
+		}
+	}
+	return -1;
+}
+
+bool Dish::capitalize(int k){
+	if(k >= strOrder.size()){
+		return false;
+	}else{
+
+	}
+}
+bool Dish::allcaps(int k){
+	locale loc;
+	if(k >= strOrder.size()){
+		return false;
+	}else{
+		//Create a copy of the string
+		string modifyStr = strOrder.at(k);
+		//Go through each letter and capitalize the string
+		for(int i = 0; i < modifyStr.length(); i++){
+			modifyStr[i] = toupper(modifyStr[i],loc);
+		}
+		//Print the string to verify
+		cout << modifyStr << endl;
+
+		//Insert the copied string back into the vector
+		return true;
+	}
+}
+
+bool Dish::truncate(int k, int i){
+
+}
+
+string Dish::getshortest(){
+	//this->heapSortShort(this->size);
+	return strOrder.at(0);
+}
+
+string Dish::getfirst(){
+	//this->heapSortShort(this->size);
+	return strOrder.at(0);
+}
+
+//Getters and Setters
+void Dish::setSize(int i){
+	this->size = i;
+}
+int Dish::getSize(){
+	return this->size;
+}
+void Dish::pushStr(string s){
+	this->strOrder.push_back(s);
+	this->lenHeap.push_back(this->size);
+	this->alphaHeap.push_back(this->size);
+	this->size++;
+}
+void Dish::printHeap(){
+	for(int i = 0; i < this->size; i++){
+		cout << this->strOrder.at(i) << " " //<< this->lenHeap.at(i) << " "
+				 << this->alphaHeap.at(i) << endl;
+	}
+	cout << endl;
+}
+
+
+
+
+

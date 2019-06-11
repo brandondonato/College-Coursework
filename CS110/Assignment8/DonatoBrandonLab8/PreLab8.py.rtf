@@ -1,0 +1,71 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 2. \
+\
+a = [76]\
+b = [92.3]\
+c = ["hello"]\
+d = [True]\
+e = [4]\
+f = [76]\
+\
+myList = a + b + c + d + e + f \
+print(myList)\
+\
+myList = []\
+myList.append(a)\
+myList.append(b)\
+myList.append(c)\
+myList.append(d)\
+myList.append(e)\
+myList.append(f)\
+print(myList)\
+\
+3. \
+\
+a = [76, 92.3, 'hello', True, 4, 76]\
+\
+a.append("apple")\
+a.append(76)\
+a.insert(3, "cat")\
+a.insert(0,99)\
+a.index("hello")\
+a.count(76)\
+a.remove(76)\
+a.remove(True)\
+\
+print(a)\
+\
+4. \
+\
+import random\
+randomList = []\
+\
+def createRandomInts(listSize, lowest, highest):\
+  listMax = highest\
+  listMin = lowest\
+  randomList.append(listMin)\
+  for num in range(listSize):\
+    randomNum = (random.randint(listMin,listMax))\
+    randomList.append(randomNum)  \
+  randomList.append(listMax)\
+  return randomList\
+    \
+print(createRandomInts(5,1,50))\
+\
+14.\
+\
+def replace(s,old,new):\
+  splitS = s.split(old)\
+  glue = new\
+  new = glue.join(splitS)\
+  return new\
+\
+print(replace('Mississippi', 'i', 'I'))\
+s = 'I love spom!  Spom is my favorite food.  Spom, spom, spom, yum!'\
+print(replace(s, 'om', 'am'))\
+print(replace(s, 'o', 'a'))}

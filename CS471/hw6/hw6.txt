@@ -1,0 +1,58 @@
+Brandon Donato
+Seung Woo Lee
+
+1. Exercise 3.1 (Pg 167)
+Indicate the binding time (when the language is designed, when the program is linked, when the program begins execution, etc.) for each of the following decisions in your favorite programming language and implementation. Explain any answers you think are open to interpretation.
+
+	The number of built-in functions (math, type queries, etc.): Language Design Time
+	The variable declaration that corresponds to a particular variable reference (use): Program Writing Time
+	The maximum length allowed for a constant (literal) character string: Language Implementation Time
+	The referencing environment for a subroutine that is passed as a parameter: Run Time
+	The address of a particular library routine: Load Time
+	The total amount of space occupied by program code and data: Load Time
+
+2.
+
+a)	Example: gcdR(2,4)
+
+	[gcdR(2,4)]
+	[i=2 (-4(%rbp), stored in %edi]
+	[j=4 (-8(%rbp), stored in %esi]
+	[%eax = i%j = 2]
+	[call gcdR with i=2, j=2]
+
+	[gcdR(2,2]
+	[i=2 (-4(%rbp), stored in %edi]
+	[j=2 (-8(%rbp), stored in %esi]
+	[%eax = i%j = 0]
+	[Jump to the exit of the program]
+	[Return the value (2)]
+
+
+b)	The stack grows toward down (toward lower addresses)
+c)	See gcdR.s
+
+3.
+	The compiler changed the recursion with the optimization. Rather than making a recursive call, the machine code is oriented in a way that different subroutines simulate the recursion as the subroutines loop until the return condition is made, and then the program exits.
+
+4.
+	First Fit algorithm selects the first large block on the list that can satisfy the request
+	Best Fit algorithm selects the smallest block on the list that can satisfy the request
+	First Fit algorithm would lower the external fragmentation.
+	External Fragmentation depends on lack of contiguous memory
+
+5.
+	The time complexity of using First Fit is O(n)
+	To speed up the allocation, you can use a max heap that has the largest block as the head
+	This modification would be O(1)
+
+6.
+	What is garbage? How is it created and why is it a problem? Discuss the comparative advantages
+	of reference counts and tracing collection as a means of solving the problem.
+
+	Garbage is allocated memory that is not used. It is a problem because it takes up the heap
+	space.
+	The advantages of reference counting and tracing collections:
+		- Allows user to know how many references of the allocated space is being used
+		- Allows user to see if any reference is not being used and, therefore, wasting heap space
+		- Allows user to free up wasted space when needed

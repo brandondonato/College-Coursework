@@ -1,0 +1,43 @@
+
+hack.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <.text>:
+   0:	5d                   	pop    %rbp
+   1:	50                   	push   %rax
+   2:	56                   	push   %rsi
+   3:	57                   	push   %rdi
+   4:	48 c7 c7 64 00 00 00 	mov    $0x64,%rdi
+   b:	48 c7 c3 0b 00 00 00 	mov    $0xb,%rbx
+  12:	48 83 eb 01          	sub    $0x1,%rbx
+  16:	48 c7 c6 c0 3c 60 00 	mov    $0x603cc0,%rsi
+  1d:	48 c7 c0 00 00 00 00 	mov    $0x0,%rax
+  24:	89 7c 86 28          	mov    %edi,0x28(%rsi,%rax,4)
+  28:	48 83 c0 64          	add    $0x64,%rax
+  2c:	89 7c 86 28          	mov    %edi,0x28(%rsi,%rax,4)
+  30:	48 83 c0 64          	add    $0x64,%rax
+  34:	89 7c 86 28          	mov    %edi,0x28(%rsi,%rax,4)
+  38:	48 83 c0 64          	add    $0x64,%rax
+  3c:	89 7c 86 28          	mov    %edi,0x28(%rsi,%rax,4)
+  40:	48 83 c0 64          	add    $0x64,%rax
+  44:	48 89 5c 86 28       	mov    %rbx,0x28(%rsi,%rax,4)
+  49:	48 83 c0 64          	add    $0x64,%rax
+  4d:	48 89 5c 86 28       	mov    %rbx,0x28(%rsi,%rax,4)
+  52:	48 83 c0 64          	add    $0x64,%rax
+  56:	48 89 5c 86 28       	mov    %rbx,0x28(%rsi,%rax,4)
+  5b:	48 83 c0 64          	add    $0x64,%rax
+  5f:	48 89 5c 86 28       	mov    %rbx,0x28(%rsi,%rax,4)
+  64:	48 83 c0 64          	add    $0x64,%rax
+  68:	89 7c 86 28          	mov    %edi,0x28(%rsi,%rax,4)
+  6c:	48 83 c0 64          	add    $0x64,%rax
+  70:	89 7c 86 28          	mov    %edi,0x28(%rsi,%rax,4)
+  74:	48 83 c0 64          	add    $0x64,%rax
+  78:	89 7c 86 28          	mov    %edi,0x28(%rsi,%rax,4)
+  7c:	48 83 c0 64          	add    $0x64,%rax
+  80:	5f                   	pop    %rdi
+  81:	5e                   	pop    %rsi
+  82:	58                   	pop    %rax
+  83:	48 c7 c3 69 09 40 00 	mov    $0x400969,%rbx
+  8a:	ff e3                	jmpq   *%rbx

@@ -1,0 +1,155 @@
+Seung Woo Lee
+Brandon Donato
+CS471 Assignment 9
+
+1.
+	CYU 6.33 (pg. 291):
+
+	Give an example in C in which an in-line subroutine may be significantly faster than a functionally equivalent macro. Give another example in which the macro is likely to be faster. (Hint: Think about applicative vs normal- order evaluation of arguments.)
+
+	#define Func(i) {int x = (i+3)*4}
+	inline int Func(i) {return (i+3)*4}
+	
+	- In the case where "i" is an expression, the macro will perform normal-order evaluation, only evaluating once the macro function is called. However, with the inline function, it will perform applicative-order evaluation, meaning it will evaluate the expression before the function. 
+
+	#define BIG = 100000000
+	inline int Func() {return 100000000}
+
+	- This case, you do not need to perform any evaluations, thus the macro will be faster than the inline function since you only make a substitution, rather than calling a function.
+
+
+2.
+	CYU 25 (pg. 331):
+	
+	What is unification? What is its role in ML?
+	
+	- Unification is the process of using pattern matching to solve equations. The importance in a language like OCaml is that it speeds up Type Checking, as it verifies types in expressions to ensure the expressions are semantically valid. (pg. 330)
+
+3.
+
+	CYU 27 (pg. 342):
+	
+	What is duck typing? What is its connection to polymorphism? In what languages does it appear?
+	
+	- Duck typing is a form of run-time checking to see if an object can be used in its current context based upon the surrounding methods and comparators. The similarity duck typing has with polymorphism is how certain objects can override functions, but duck typing can accept any object that has a particular method. Languages that are dynamically typed without strong typing have duck typing like Python, Ruby, etc. (pg. 332, https://stackoverflow.com/questions/11502433/what-is-the-difference-between-polymorphism-and-duck-typing)
+ 
+4.
+	CYU 33 (pg. 342):
+
+	Why will C# accept int as a generic argument, but Java won’t?
+	
+	-  Java does not accept int as a generic argument because Java's design was based on the future implementations of the language and its compatibility with previous libraries, VMs and previous versions of the language. However, C# did not feel the need to be as constrained as Java, so generics were planned from the beginning. (pg. 339)
+
+5.
+	Here are some type and variable declarations in C syntax:
+
+	typedef char* String1;
+	typedef char* String2:
+
+	String1 a;
+	String2 b, c;
+	String2 d;
+
+	State which variables are type equivalent under (a) structural equivalence, (b) strict name equivalence, and (c) the actual C equivalence algorithm.
+
+	a) They are all structurally equivalent (char*).
+	b) Variables b, c and d are all equivalent, and a is not equivalent to any of the other variables.
+	c) C equivalence uses structural equivalent, so this means all variables are equivalent.
+	
+	(http://bingweb.binghamton.edu/~head/CS471/NOTES/RUNTIME/Chap7.html)
+
+6.
+	Given the following C++ declaration,
+	double* dp = new double(3);
+	void* vp;
+	int* ip;
+	which of the following assignments does the compiler complain about?
+
+	vp = dp;
+	dp = vp; 
+	ip = dp; 
+	dp = ip;
+	ip = vp;
+
+	ip = (int*) vp;
+	ip = static_cast<int*>(vp);
+	ip = static_cast<int*>(dp);
+	ip = reinterpret_cast<int*>(dp);
+
+	Briefly explain the behavior of the compiler.  Will *ip ever have the value 3 after one of the assignments to ip ?
+
+	
+	The compiler will view the following as issues:
+	
+	dp = vp;
+	ip = vp;
+	dp = ip;
+	
+	ip = static_cast<int*>(dp);
+
+	- The compiler is having an issue with the fact you are casting pointers that have more inherit information and trying to cast them to something that 1) is not large enough to store all of the information. 
+
+	- *ip will have the value 3 after the reinterpret_cast since this only works if you cast the pointer to a different type and then back to its original type.
+
+	(https://www.geeksforgeeks.org/reinterpret_cast-in-c-type-casting-operators/)	
+
+7. Consider the following code skeleton in C++:
+		#include <list>
+		
+		using std::list;
+		
+		class foo { ...
+		class bar : public foo { ...
+		static void print_all(list<foo*> &L) { ...
+		list<foo*> LF;
+		list<bar*> LB;
+		...
+		print_all(LF); // works fine
+		print_all(LB); // static semantic error
+
+Explain why the compiler won’t allow the second call. Give an example of
+bad things that could happen if it did.
+
+	- The compiler will not allow the second call because it is strongly typed and need an explicit cast. An example of a bad thing that can happen if it was allowed is if you program it to use a function that is in bar but not in foo. 
+
+8. Bjarne Stroustrup, the original designer of C++, once described templates as “a clever kind of macro that obeys the scope, naming, and type rules of C++” [Str13, 2nd ed., p. 257]. How close is the similarity? What can templates do that macros can’t? What do macros do that templates don’t?
+
+	- They are similiar in a sense that both substitute a certain value or type. Templates can call themselves recursively and are type safe while macros cannot and are not. Macros is used as an alias for a value or a function while templates are not.
+
+9. What are struct tags in C? How are they related to type names? How did they change in C++?
+
+	- struct tags are record types that allows related data to be stored together. They are related to type names because the struct word is needed with the name of the struct to name the type. Classes pretty much replaced structs in C++.
+
+10. Consider the following C declaration, compiled on a 64-bit x86 machine:
+		struct {
+			int n;
+			char c;
+		} A[10][10];
+		
+If the address of A[0][0]is 1000 (decimal), what is the address of A[3][7]?
+
+	- Address of A[3][7] is 1296
+	
+11. Explain the meaning of the following C declarations:
+
+		double *a[n]; 		-- An array of n double pointers
+		double (*b)[n];		-- A pointer to array of n doubles
+		double (*c[n])();	-- An array of n pointers to function returning double
+		double (*d())[n];	-- A function returning pointer to an array of n doubles
+
+12. Suppose this C++ code
+
+		const int k = ???; // you need to figure out the value of ???
+		int * i = 0;
+		struct A {
+		    int x[k];
+		};
+		A* a = 0; 
+		printf( "%d  %d  %d %d  %d  %d  ", i+1, i+k, k, a+k, &(a[9]), &(a[9]) - (a+1)  );
+
+outputs the values for the first two expressions
+     4  16
+     
+What are its remaining outputs?  Briefly explain how the output is obtained.  (Hint: pay attention to coercion.) 
+
+	- 4 64 144 128. Incrementing int pointer by 1 will add size of int (4) and so that is the first output. Knowing that you divide output (16) by size of int (4) to get the value of k which would be 4. The size of struct A will thus be 16 because it hold an int array of 4 elements (4*4=16). So incrementing struct A pointer by 1 will add 16 to the pointer.

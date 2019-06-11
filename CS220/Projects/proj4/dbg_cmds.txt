@@ -1,0 +1,4 @@
+set disassemble-next-line on
+#b getUserLine
+b *0x400f09
+run <testhex.txt

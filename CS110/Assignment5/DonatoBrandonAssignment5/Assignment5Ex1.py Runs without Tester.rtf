@@ -1,0 +1,146 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 '''\
+Donato,Brandon\
+bdonato1@binghamton.edu\
+CS 110 - B57\
+Jia Yang\
+assignment5Ex1\
+'''\
+\
+#What would be your income tax based upon your marital status and your \\\
+#taxable income?\
+\
+#Outputs:\
+#Marital Status\
+#Income\
+#Taxes\
+\
+#Inputs:\
+#Marital Status\
+#Income\
+\
+#Functions:\
+#computeTax():\
+#  The function takes in the marital status and income and then determines\\\
+#  the tax bracket the person would be in and then computes the taxes the\\\
+#  person owes.\
+\
+INCOME_9075 = 9075\
+INCOME_18150 = 18150\
+INCOME_36900 = 36900\
+INCOME_73800 = 73800\
+INCOME_89350 = 89350\
+INCOME_148850 = 148850\
+INCOME_186350 = 186350\
+INCOME_226850 = 226850\
+INCOME_405100 = 405100\
+INCOME_406750 = 406750\
+INCOME_457600 = 457600\
+TAXED_INCOME_907_5 = 907.5\
+TAXED_INCOME_1815 = 1815\
+TAXED_INCOME_5081_25 = 5081.25\
+TAXED_INCOME_10162_5 = 10162.5\
+TAXED_INCOME_18193_75 = 18193.75\
+TAXED_INCOME_28925 = 28925\
+TAXED_INCOME_45353_75 = 45353.75\
+TAXED_INCOME_50765 = 50765\
+TAXED_INCOME_109587_5 = 109587.5\
+TAXED_INCOME_117541_25 = 117541.25\
+TAXED_INCOME_118118_75 = 118118.75\
+TAXED_INCOME_127962_5 = 127962.5\
+TAX_PERCENT_10 = .10\
+TAX_PERCENT_15 = .15\
+TAX_PERCENT_25 = .25\
+TAX_PERCENT_28 = .28\
+TAX_PERCENT_33 = .33\
+TAX_PERCENT_35 = .35\
+TAX_PERCENT_396 = .396\
+\
+def computeTax(maritalStatus, income):\
+  if (maritalStatus == "single" or maritalStatus == "Single"):\
+    if (income >= 0 and income <= INCOME_9075):\
+      tax = (TAX_PERCENT_10 * income)\
+    elif (income > INCOME_9075 and income <= INCOME_36900):\
+      tax = (TAXED_INCOME_907_5 + (TAX_PERCENT_15 * income))\
+    elif (income > INCOME_36900 and income <= INCOME_89350):\
+      tax = (TAXED_INCOME_5081_25 + (TAX_PERCENT_25 * income))\
+    elif (income > INCOME_89350 and income <= INCOME_186350):\
+      tax = (TAXED_INCOME_18193_75 + (TAX_PERCENT_28 * income))\
+    elif (income > INCOME_186350 and income <= INCOME_405100):\
+      tax = (TAXED_INCOME_45353_75 + (TAX_PERCENT_33 * income))\
+    elif (income > INCOME_405100 and income <= INCOME_406750):\
+      tax = (TAXED_INCOME_117541_25 + (TAX_PERCENT_35 * income))\
+    else:\
+      tax = (TAXED_INCOME_118118_75 + (TAX_PERCENT_396 * income))\
+  else:\
+    if (income >= 0 and income <= INCOME_18150):\
+      tax = (TAX_PERCENT_10 * income)\
+    elif (income > INCOME_18150 and income <= INCOME_73800):\
+      tax = (TAXED_INCOME_1815 + (TAX_PERCENT_15 * income))\
+    elif (income > INCOME_73800 and income <= INCOME_148850):\
+      tax = (TAXED_INCOME_10162_5 + (TAX_PERCENT_25 * income))\
+    elif (income > INCOME_148850 and income <= INCOME_226850):\
+      tax = (TAXED_INCOME_28925 + (TAX_PERCENT_28 * income))\
+    elif (income > INCOME_226850 and income <= INCOME_405100):\
+      tax = (TAXED_INCOME_50765 + (TAX_PERCENT_33 * income))\
+    elif (income > INCOME_405100 and income <= INCOME_457600):\
+      tax = (TAXED_INCOME_109587_5 + (TAX_PERCENT_35 * income))\
+    else:\
+      tax = (TAXED_INCOME_127962_5 + (TAX_PERCENT_396 * income))\
+  return tax\
+\
+\
+def main():\
+  maritalStatus = input("Are you single or married? Please type your\\\
+ response. ")\
+  income = int(input("What is your taxable income? "))\
+  tax = computeTax(maritalStatus, income)\
+  print("You've entered that you're",maritalStatus,"and that you make $", \\\
+income,"a year. Therefore your income tax is: $", tax)\
+\
+  '''\
+# tester\
+# Test values should show 'smooth' transition from one tax bracket to the next\
+\
+  states = ['single', 'married']\
+  incomes = [[0,9075, 9076, 36900, 36901, 89350, 89351,\
+             186350, 186351, 405100, 405101, 406750, 406751],\
+            [0, 18150, 18151, 73800, 73801, 148850, 148851,\
+            226850, 226851,  405100, 405101, 457600, 457601]]\
+\
+ \
+\
+  for i in range(len(states)):\
+    for j in range(len(incomes[0])):\
+      print("%s, $%.2f = $%.2f" % \\\
+          (states[i], incomes[i][j], computeTax(states[i], incomes[i][j])))\
+ '''\
+\
+main()\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+Python 3.4.3 (v3.4.3:9b73f1c3e601, Feb 23 2015, 02:52:03) \
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin\
+Type "copyright", "credits" or "license()" for more information.\
+>>> ================================ RESTART ================================\
+>>> \
+Are you single or married? Please type your response. single\
+What is your taxable income? 187420\
+You've entered that you're single and that you make $ 187420 a year. Therefore your income tax is: $ 107202.35\
+>>> ================================ RESTART ================================\
+>>> \
+Are you single or married? Please type your response. Single\
+What is your taxable income? 187420\
+You've entered that you're Single and that you make $ 187420 a year. Therefore your income tax is: $ 107202.35\
+>>> ================================ RESTART ================================\
+>>> \
+Are you single or married? Please type your response. Married\
+What is your taxable income? 187420\
+You've entered that you're Married and that you make $ 187420 a year. Therefore your income tax is: $ 81402.6\
+>>> }
